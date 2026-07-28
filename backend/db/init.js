@@ -1,4 +1,4 @@
-// ?拐耨 AI敶勗??拇? - ?唳摨?憪?
+// 哩修 AI影像助手 - 数据库初始化
 db = db.getSiblingDB('lixiu');
 
 db.createCollection('templates');
@@ -9,7 +9,7 @@ db.createCollection('users');
 db.createCollection('feedback');
 db.createCollection('learning_logs');
 
-// 蝝Ｗ?
+// 索引
 db.templates.createIndex({ category: 1, usage_count: -1 });
 db.templates.createIndex({ tags: 1 });
 db.templates.createIndex({ created_at: -1 });
@@ -24,60 +24,60 @@ db.tasks.createIndex({ user_id: 1 });
 db.feedback.createIndex({ task_id: 1 });
 db.feedback.createIndex({ rating: -1 });
 
-// 暺恕璅⊥
+// 默认模板
 db.templates.insertMany([
   {
-    name: '?芰蝢?',
+    name: '自然美颜',
     category: 'beauty',
     type: 'portrait',
-    description: '???亙虜?芣?嚗???嗡?憭詨?',
+    description: '适合日常自拍，效果自然不夸张',
     params: { smooth: 40, whiten: 25, big_eyes: 15, slim_face: 20 },
-    tags: ['?芰', '?亙虜', '?芣?'],
+    tags: ['自然', '日常', '自拍'],
     usage_count: 0, rating: 4.5, created_at: new Date()
   },
   {
-    name: '蝎曇憟嗆硃??,
+    name: '精致奶油肌',
     category: 'beauty',
     type: 'portrait',
-    description: '蝎曇憟嗆硃?????????箏?',
+    description: '精致奶油肌效果，适合重要场合',
     params: { smooth: 55, whiten: 35, big_eyes: 20, slim_face: 30, sharpen: 30 },
-    tags: ['蝎曇', '憟嗆硃??, '擃漣??],
+    tags: ['精致', '奶油肌', '高级感'],
     usage_count: 0, rating: 4.8, created_at: new Date()
   },
   {
-    name: '?亦頂皜',
+    name: '日系清新',
     category: 'style',
     type: 'portrait',
-    description: '?亦頂皜憌嚗??瑕??抒?',
+    description: '日系清新风格，适合户外照片',
     params: { smooth: 35, whiten: 20, filter: 'pink_mist', intensity: 45 },
-    tags: ['?亦頂', '皜', '?瑕?'],
+    tags: ['日系', '清新', '户外'],
     usage_count: 0, rating: 4.3, created_at: new Date()
   },
   {
-    name: '?拍頂瘞游???,
+    name: '韩系水光肌',
     category: 'style',
     type: 'portrait',
-    description: '?拍頂瘞游??????漁??瘜?,
+    description: '韩系水光肌效果，透亮有光泽',
     params: { smooth: 60, whiten: 45, filter: 'cool_white', intensity: 60 },
-    tags: ['?拍頂', '瘞游???, '?漁'],
+    tags: ['韩系', '水光肌', '透亮'],
     usage_count: 0, rating: 4.6, created_at: new Date()
   },
   {
-    name: 'Vlog敹怠',
+    name: 'Vlog快剪',
     category: 'vlog',
     type: 'video',
-    description: '敹恍log?芾?嚗?刻蓮?箏???',
+    description: '快速Vlog剪辑，自动转场和配乐',
     params: { transitions: 'fade', music: 'vlog_default', speed: 1.0, duration: 60 },
-    tags: ['Vlog', '敹恍?, '?亙虜'],
+    tags: ['Vlog', '快速', '日常'],
     usage_count: 0, rating: 4.2, created_at: new Date()
   },
   {
-    name: '?∠閫?',
+    name: '卡点视频',
     category: 'beat',
     type: 'video',
-    description: '?芸?∠?芾?嚗??喃?蝐餉?憸?,
+    description: '自动卡点剪辑，适合音乐类视频',
     params: { beat_detection: true, transition_speed: 'fast', effects: ['flash', 'zoom'] },
-    tags: ['?∠', '?喃?', '?恍'],
+    tags: ['卡点', '音乐', '炫酷'],
     usage_count: 0, rating: 4.7, created_at: new Date()
   }
 ]);
@@ -91,6 +91,6 @@ db.createUser({
   ]
 });
 
-print('???唳摨?憪?摰?嚗?);
-print('?? 撌脣?撱粹??? templates, tutorials, skills, tasks, users, feedback, learning_logs');
-print('?? 撌脫??仿?霈斗芋?? 6 銝?);
+print('✅ 数据库初始化完成！');
+print('📊 已创建集合: templates, tutorials, skills, tasks, users, feedback, learning_logs');
+print('📝 已插入默认模板: 6 个');
