@@ -87,7 +87,9 @@ services:
     volumes: [redis_data:/data]
     healthcheck:
       test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
-      interval: 10s; timeout: 5s; retries: 5
+      interval: 10s
+      timeout: 5s
+      retries: 5
     restart: unless-stopped
     networks: [lixiu-network]
 
@@ -113,7 +115,9 @@ services:
       - ./backend/db/init.js:/docker-entrypoint-initdb.d/init.js:ro
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongosh --quiet -u ${MONGO_USER} -p ${MONGO_PASSWORD} --authenticationDatabase admin
-      interval: 10s; timeout: 5s; retries: 5
+      interval: 10s
+      timeout: 5s
+      retries: 5
     restart: unless-stopped
     networks: [lixiu-network]
 
