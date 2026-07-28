@@ -1,0 +1,84 @@
+{
+  "dashboard": {
+    "title": "哩修 AI影像助手 - 系统监控",
+    "tags": ["lixiu", "production"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "title": "API请求速率",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(http_requests_total[1m])",
+            "legendFormat": "{{ method }} {{ endpoint }}"
+          }
+        ]
+      },
+      {
+        "title": "API响应时间 (P95)",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))",
+            "legendFormat": "{{ endpoint }}"
+          }
+        ]
+      },
+      {
+        "title": "错误率",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "sum(rate(http_requests_total{status=~\"5..\"}[5m])) / sum(rate(http_requests_total[5m])) * 100"
+          }
+        ],
+        "thresholds": [
+          { "value": 1, "color": "green" },
+          { "value": 5, "color": "orange" },
+          { "value": 10, "color": "red" }
+        ]
+      },
+      {
+        "title": "任务处理统计",
+        "type": "graph",
+        "targets": [
+          { "expr": "rate(tasks_completed_total[5m])", "legendFormat": "完成" },
+          { "expr": "rate(tasks_failed_total[5m])", "legendFormat": "失败" }
+        ]
+      },
+      {
+        "title": "系统资源",
+        "type": "row",
+        "panels": [
+          {
+            "title": "CPU使用率",
+            "type": "gauge",
+            "targets": [{ "expr": "100 - (avg(rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)" }]
+          },
+          {
+            "title": "内存使用率",
+            "type": "gauge",
+            "targets": [{ "expr": "(1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100" }]
+          }
+        ]
+      },
+      {
+        "title": "AI学习统计",
+        "type": "stat",
+        "targets": [{ "expr": "ai_skills_total" }],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short",
+            "thresholds": {
+              "steps": [
+                { "value": 0, "color": "blue" },
+                { "value": 50, "color": "green" },
+                { "value": 100, "color": "purple" }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}
