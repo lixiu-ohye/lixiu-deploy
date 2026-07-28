@@ -1,1 +1,33 @@
-FROM python:3.11-slim\nWORKDIR /app\nCOPY crawler_requirements.txt .\nRUN pip install --no-cache-dir -r crawler_requirements.txt\nCOPY . .\nCMD ["python", "run_crawler.py"]
+# ========== 爬虫专用镜像 ==========
+FROM python:3.11-slim
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    wget gnupg curl unzip xvfb libgconf-2-4 libxi6 libxss1 libappindicator3-1 \
+    fonts-liberation libasound2 libnspr4 libnss3 libu2f-udev xdg-utils \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+    echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list && \
+    apt-get update && apt-get install -y google-chrome-stable && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN CHROME_VER=$(google-chrome --version | awk '{print $3}' | cut -d'.' -f1) && \
+    wget -q "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VER}" -O /tmp/cd_ver && \
+    CD_VER=$(cat /tmp/cd_ver) && \
+    wget -q "https://chromedriver.storage.googleapis.com/${CD_VER}/chromedriver_linux64.zip" -O /tmp/cd.zip && \
+    unzip /tmp/cd.zip -d /usr/local/bin/ && \
+    rm /tmp/cd.zip /tmp/cd_ver
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY crawler/ ./crawler/
+COPY ai_learner/ ./ai_learner/
+COPY config.py .
+
+RUN useradd -m -u 1000 crawler && chown -R crawler:crawler /app
+USER crawler
+
+CMD ["python", "-m", "crawler.scheduler"]
