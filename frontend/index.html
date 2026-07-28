@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>?拐耨 繚 AI?箄?曉?撌亙? v2.5</title>
+<style>
+* {
+margin:0;padding:0;box-sizing:border-box
+}
+:root {
+--rose: #e8a0bf;
+--rose-dark: #d485a8;
+--gold: #d4a574;
+--gold-light: #e8c9a0;
+--cream: #fdf6f0;
+--lavender: #c9b6d9;
+--lavender-dark: #a88fc4;
+--bg: #fdf6f0;
+--card: rgba(255,252,248,0.95);
+--shadow: 0 8px 32px rgba(200,160,140,0.15);
+--radius: 18px;
+--text: #4a3835;
+--text-muted: #9a8a85;
+--primary: #e8a0bf;
+--primary-dark: #d485a8;
+--secondary: #c9b6d9;
+--success: #b8d9b0;
+--danger: #e8a0a0;
+--info: #b0c8d9
+}
+body {
+font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Noto Sans SC',sans-serif;
+background: var(--bg);
+min-height:100vh;
+color:var(--text);
+overflow-x:hidden
+}
+.container {max-width:1200px;margin:0 auto;padding:14px}
+
+/* Header */
+header {
+background:rgba(255,252,248,0.9);
+backdrop-filter:blur(12px);
+border-radius:var(--radius);
+padding:14px 20px;
+margin-bottom:16px;
+box-shadow:var(--shadow);
+display:flex;
+justify-content:space-between;
+align-items:center;
+border:1px solid rgba(200,160,140,0.15)
+}
+.logo {display:flex;align-items:center;gap:8px}
+.logo-icon {
+width:38px;height:38px;
+background:linear-gradient(135deg,var(--rose),var(--gold));
+border-radius:10px;
+display:flex;align-items:center;justify-content:center;
+font-size:20px;
+color:#fff;
+box-shadow:0 3px 10px rgba(232,160,191,0.3)
+}
+.logo-text {
+font-size:20px;font-weight:700;
+background:linear-gradient(135deg,var(--rose-dark),var(--gold));
+-webkit-background-clip:text;-webkit-text-fill-color:transparent
+}
+.header-right {display:flex;align-items:center;gap:10px}
+.status-badge {
+display:flex;align-items:center;gap:6px;
+background:rgba(200,160,140,0.1);
+padding:6px 14px;
+border-radius:18px;
+font-size:12px;color:var(--text-muted)
+}
+.dot {width:7px;height:7px;border-radius:50%;background:var(--success);animation:pulse 2s infinite}
+@keyframes pulse {0%,100%{opacity:1}50%{opacity:0.4}}
+
+/* Tabs */
+.main-tabs {
+display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap
+}
+.main-tab {
+padding:8px 18px;border:none;border-radius:22px;
+font-size:13px;font-weight:600;cursor:pointer;
+background:rgba(200,160,140,0.08);
+color:var(--text-muted);
+transition:all .2s
+}
+.main-tab:hover {background:rgba(232,160,191,0.12);color:var(--rose-dark)}
+.main-tab.active {
+background:linear-gradient(135deg,var(--rose),var(--gold));
+color:#fff;box-shadow:0 3px 12px rgba(232,160,191,0.25)
+}
+.tab-content {display:none}
+.tab-content.active {display:block}
+
+/* Card */
+.card {
+background:var(--card);
+border-radius:var(--radius);
+padding:20px;
+margin-bottom:16px;
+box-shadow:var(--shadow);
+border:1px solid rgba(200,160,140,0.1)
+}
+.card-title {
+font-size:17px;font-weight:700;margin-bottom:14px;
+display:flex;align-items:center;gap:8px;
+color:var(--text)
+}
+.card-title .ic {
+width:28px;height:28px;border-radius:8px;
+background:linear-gradient(135deg,var(--rose),var(--gold));
+display:flex;align-items:center;justify-content:center;
+font-size:14px;color:#fff
+}
+
+/* Upload */
+.upload-zone {
+border:2.5px dashed var(--rose);
+border-radius:14px;
+padding:32px 20px;
+text-align:center;cursor:pointer;
+transition:all .3s;
+background:rgba(232,160,191,0.04)
+}
+.upload-zone:hover {background:rgba(232,160,191,0.08);transform:translateY(-2px)}
+.upload-zone.dragover {background:rgba(232,160,191,0.14);border-color:var(--gold)}
+.upload-zone .ico {font-size:40px;color:var(--rose);margin-bottom:8px}
+.upload-zone .txt {font-size:15px;color:var(--text-muted);margin-bottom:4px}
+.upload-zone .hint {font-size:12px;color:#b0a8a5}
+
+/* Filter grid */
+.filter-cats {
+display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;
+overflow-x:auto;padding-bottom:4px
+}
+.filter-cat {
+padding:6px 16px;border:1.5px solid rgba(200,160,140,0.2);
+border-radius:18px;
+font-size:12px;font-weight:600;cursor:pointer;
+background:#fff;color:var(--text-muted);white-space:nowrap;
+transition:all .2s
+}
+.filter-cat:hover {border-color:var(--rose);color:var(--rose-dark)}
+.filter-cat.active {border-color:var(--rose);background:rgba(232,160,191,0.08);color:var(--rose-dark)}
+
+.filter-grid {
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(115px,1fr));
+gap:8px;
+max-height:420px;
+overflow-y:auto;
+padding-right:4px
+}
+.filter-grid::-webkit-scrollbar {width:4px}
+.filter-grid::-webkit-scrollbar-thumb {background:#d9cdc8;border-radius:2px}
+.fc {
+background:#fff;border-radius:12px;
+padding:12px 8px;text-align:center;cursor:pointer;
+border:2px solid transparent;transition:all .2s;
+box-shadow:0 2px 8px rgba(0,0,0,0.04)
+}
+.fc:hover {transform:translateY(-3px);box-shadow:0 5px 14px rgba(200,160,140,0.12)}
+.fc.active {border-color:var(--rose);background:rgba(232,160,191,0.04)}
+.fc .fi {font-size:24px;margin-bottom:4px}
+.fc .fn {font-size:12px;font-weight:600}
+.fc .fd {font-size:10px;color:var(--text-muted);margin-top:2px}
+.fc .f-stars {font-size:10px;color:var(--gold);margin-top:2px}
+
+/* Chat + Tutorial row */
+.chat-tut-row {display:grid;grid-template-columns:1.2fr 0.8fr;gap:16px}
+.chat-box,.tut-box {display:flex;flex-direction:column}
+.chat-msgs {
+flex:1;max-height:240px;overflow-y:auto;padding:10px;
+background:rgba(200,160,140,0.04);
+border-radius:12px;margin-bottom:10px;
+scrollbar-width:thin
+}
+.chat-msgs::-webkit-scrollbar {width:4px}
+.chat-msgs::-webkit-scrollbar-thumb {background:#d9cdc8;border-radius:2px}
+.msg {margin-bottom:8px;padding:9px 13px;border-radius:13px;max-width:88%;font-size:13px;line-height:1.5;animation:fadeIn .3s}
+@keyframes fadeIn {from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.msg.user {
+background:linear-gradient(135deg,var(--rose),var(--gold));
+color:#fff;margin-left:auto;border-bottom-right-radius:3px
+}
+.msg.ai {
+background:rgba(200,160,140,0.08);
+color:var(--text);margin-right:auto;border-bottom-left-radius:3px
+}
+.chat-inp {display:flex;gap:6px}
+.chat-inp input {
+flex:1;padding:9px 14px;border:2px solid rgba(200,160,140,0.15);
+border-radius:20px;font-size:13px;outline:none;transition:border-color .2s
+}
+.chat-inp input:focus {border-color:var(--rose)}
+.chat-send {
+padding:9px 18px;border:none;border-radius:20px;
+background:linear-gradient(135deg,var(--rose),var(--gold));
+color:#fff;font-weight:600;font-size:12px;cursor:pointer;transition:all .2s
+}
+.chat-send:hover {transform:translateY(-1px);box-shadow:0 3px 10px rgba(232,160,191,0.3)}
+
+/* Tutorial */
+.tut-inp {display:flex;gap:6px;margin-bottom:10px}
+.tut-inp input {
+flex:1;padding:9px 14px;border:2px solid rgba(200,160,140,0.15);
+border-radius:12px;font-size:13px;outline:none
+}
+.tut-inp input:focus {border-color:var(--rose)}
+.tut-btn {
+padding:9px 14px;border:none;border-radius:12px;
+background:linear-gradient(135deg,#b8d9b0,#a0c89a);
+color:#fff;font-weight:600;font-size:12px;cursor:pointer;transition:all .2s
+}
+.tut-btn:hover {transform:translateY(-1px);box-shadow:0 3px 10px rgba(184,217,176,0.3)}
+.learn-skills {max-height:160px;overflow-y:auto}
+.ls {
+display:flex;justify-content:space-between;align-items:center;
+padding:6px 10px;background:rgba(184,217,176,0.1);
+border-radius:8px;margin-bottom:4px;font-size:12px
+}
+.ls .lb {background:var(--success);color:#5a7a55;padding:2px 8px;border-radius:10px;font-size:10px}
+.empty-s {font-size:12px;color:var(--text-muted);text-align:center;padding:16px 0}
+
+/* Progress */
+.progress-section {display:none}
+.prog-bar {width:100%;height:5px;background:rgba(200,160,140,0.15);border-radius:3px;overflow:hidden;margin:14px 0}
+.prog-fill {height:100%;background:linear-gradient(90deg,var(--rose),var(--gold));border-radius:3px;transition:width .4s ease;width:0%}
+.prog-txt {font-size:13px;color:var(--text-muted);margin-bottom:8px}
+.prog-log {background:rgba(200,160,140,0.04);border-radius:10px;padding:10px;max-height:140px;overflow-y:auto;font-family:monospace;font-size:11px}
+.pl {padding:3px 6px;margin-bottom:2px;border-radius:3px}
+.pl.info {background:rgba(176,200,217,0.1);color:#5a7a8a}
+.pl.ok {background:rgba(184,217,176,0.1);color:#5a7a55}
+
+/* Compare */
+.compare-section {display:none}
+.comp-grid {display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+.comp-box {text-align:center}
+.comp-box h4 {font-size:14px;margin-bottom:8px;color:var(--text)}
+.comp-img {
+width:100%;height:260px;background:rgba(200,160,140,0.06);
+border-radius:12px;overflow:hidden;
+display:flex;align-items:center;justify-content:center
+}
+.comp-img img {width:100%;height:100%;object-fit:contain}
+.comp-img .ph {font-size:13px;color:var(--text-muted)}
+.act-row {display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.act-btn {
+padding:10px 24px;border:none;border-radius:22px;
+font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;color:#fff
+}
+.act-btn.dl {background:linear-gradient(135deg,#b8d9b0,#a0c89a)}
+.act-btn.sh {background:linear-gradient(135deg,#b0c8d9,#90b0c9)}
+.act-btn.rt {background:linear-gradient(135deg,var(--gold),#c89a70)}
+.act-btn:hover {transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.1)}
+.act-btn:disabled {opacity:.5;cursor:not-allowed;transform:none}
+
+/* Templates */
+.tpl-grid {
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+gap:10px
+}
+.tpl-card {
+background:#fff;border-radius:12px;
+padding:14px;text-align:center;cursor:pointer;
+transition:all .2s;
+box-shadow:0 2px 8px rgba(0,0,0,0.04)
+}
+.tpl-card:hover {transform:translateY(-3px);box-shadow:0 5px 18px rgba(200,160,140,0.12)}
+.tpl-card .ti {font-size:30px;margin-bottom:6px}
+.tpl-card .tn {font-size:13px;font-weight:600}
+.tpl-card .td {font-size:11px;color:var(--text-muted);margin:4px 0}
+.tpl-card .tb {
+display:inline-block;padding:2px 10px;border-radius:10px;
+font-size:10px;font-weight:600
+}
+.tpl-card .tb.beauty {background:rgba(232,160,191,0.12);color:var(--rose-dark)}
+.tpl-card .tb.filter {background:rgba(212,165,116,0.12);color:var(--gold)}
+.tpl-card .tb.effect {background:rgba(201,182,217,0.12);color:var(--lavender-dark)}
+.tpl-card .tb.style {background:rgba(232,160,160,0.12);color:#c88}
+.tpl-card .tb.vlog {background:rgba(176,200,217,0.12);color:#6a8a9a}
+.tpl-card .tb.beat {background:rgba(184,217,176,0.12);color:#5a7a55}
+
+/* Dev FAB */
+.dev-fab {
+position:fixed;bottom:20px;right:20px;
+width:44px;height:44px;border-radius:50%;
+background:linear-gradient(135deg,var(--rose),var(--gold));
+color:#fff;border:none;font-size:18px;cursor:pointer;
+box-shadow:0 4px 14px rgba(232,160,191,0.3);
+transition:all .2s;z-index:999
+}
+.dev-fab:hover {transform:scale(1.08);box-shadow:0 6px 20px rgba(232,160,191,0.35)}
+
+/* Modal */
+.modal-overlay {
+position:fixed;top:0;left:0;width:100%;height:100%;
+background:rgba(74,56,53,0.45);
+display:flex;align-items:center;justify-content:center;z-index:10000
+}
+.modal-box {
+background:#fff;border-radius:var(--radius);padding:24px;
+max-width:460px;width:90%;max-height:80vh;overflow-y:auto;
+box-shadow:0 16px 48px rgba(0,0,0,.18)
+}
+.modal-box h2 {margin-bottom:6px;font-size:18px;color:var(--text)}
+.modal-box .ml {font-size:12px;color:var(--text-muted);margin-bottom:14px}
+.modal-inp {
+width:100%;padding:10px 14px;border:2px solid rgba(200,160,140,0.15);
+border-radius:8px;margin-bottom:8px;font-size:14px;outline:none
+}
+.modal-inp:focus {border-color:var(--rose)}
+.modal-btn {
+width:100%;padding:10px;border:none;border-radius:8px;
+font-size:14px;font-weight:600;cursor:pointer;transition:all .2s
+}
+.modal-btn.pri {background:linear-gradient(135deg,var(--rose),var(--gold));color:#fff;margin-bottom:6px}
+.modal-btn.pri:hover {transform:translateY(-1px)}
+.modal-btn.sec {background:rgba(200,160,140,0.08);color:var(--text)}
+
+/* Dash */
+.dash-g {display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.dash-i {
+display:flex;justify-content:space-between;align-items:center;
+padding:10px;background:rgba(200,160,140,0.04);border-radius:8px;font-size:12px
+}
+.dash-i .st {
+padding:2px 8px;border-radius:10px;font-size:11px
+}
+.dash-i .st.on {background:rgba(184,217,176,0.15);color:#5a7a55}
+
+/* History */
+.hist-section {display:none}
+.hist-list {max-height:260px;overflow-y:auto}
+.hist-item {
+display:flex;justify-content:space-between;align-items:center;
+padding:8px 12px;background:rgba(200,160,140,0.04);
+border-radius:8px;margin-bottom:6px;cursor:pointer;
+transition:all .2s;font-size:12px
+}
+.hist-item:hover {background:rgba(232,160,191,0.06)}
+.hist-item .hi-filter {font-weight:600}
+
+/* Toast */
+.toast {
+position:fixed;top:16px;right:16px;padding:10px 18px;
+border-radius:12px;color:#fff;font-size:13px;font-weight:500;
+z-index:20000;animation:slideIn .3s;max-width:300px
+}
+@keyframes slideIn {from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+.toast.ok {background:linear-gradient(135deg,#b8d9b0,#a0c89a)}
+.toast.err {background:linear-gradient(135deg,#e8a0a0,#d48585)}
+.toast.inf {background:linear-gradient(135deg,#b0c8d9,#90b0c9)}
+
+/* Responsive */
+@media (max-width:680px) {
+.chat-tut-row {grid-template-columns:1fr}
+.comp-grid {grid-template-columns:1fr}
+.filter-grid {grid-template-columns:repeat(auto-fill,minmax(95px,1fr))}
+.fc {padding:10px 6px}
+.fc .fi {font-size:20px}
+.fc .fn {font-size:11px}
+.tpl-grid {grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}
+.logo-text {font-size:17px}
+header {padding:12px 14px}
+.dash-g {grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <div class="logo-icon">?</div>
+      <div class="logo-text">?拐耨 繚 ?箄?曉?撌亙?</div>
+    </div>
+    <div class="header-right">
+      <span class="status-badge"><span class="dot"></span>?賒摮虫?</span>
+    </div>
+  </header>
+
+  <!-- Main Tabs -->
+  <div class="main-tabs">
+    <button class="main-tab active" data-tab="tab-edit">? 靽桀</button>
+    <button class="main-tab" data-tab="tab-tpl">?? 璅⊥?刻?</button>
+    <button class="main-tab" data-tab="tab-history">?? 憭?霈啣?</button>
+  </div>
+
+  <!-- ===== Tab: 靽桀 ===== -->
+  <div class="tab-content active" id="tab-edit">
+    <!-- Upload -->
+    <div class="card">
+      <div class="card-title"><span class="ic">?</span>銝?蝝?</div>
+      <div class="upload-zone" id="uploadZone">
+        <div class="ico">??</div>
+        <div class="txt">?孵??曄? ????唳迨憭?/div>
+        <div class="hint">JPG / PNG / WebP ??50MB</div>
+        <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" style="display:none">
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="card">
+      <div class="card-title"><span class="ic">?</span>??皛日? 繚 <span id="fCount">0</span>蝘?/div>
+      <div class="filter-cats" id="filterCats">
+        <button class="filter-cat active" data-cat="all">?券</button>
+        <button class="filter-cat" data-cat="beauty">?? 蝢?</button>
+        <button class="filter-cat" data-cat="tone">? 靚</button>
+        <button class="filter-cat" data-cat="film">??儭??嗥?</button>
+        <button class="filter-cat" data-cat="style">????</button>
+        <button class="filter-cat" data-cat="japanese">? ?亦頂</button>
+        <button class="filter-cat" data-cat="korean">?? ?拍頂</button>
+        <button class="filter-cat" data-cat="learned">?? ?芸郎</button>
+      </div>
+      <div class="filter-grid" id="filterGrid"></div>
+    </div>
+
+    <!-- Chat + Tutorial -->
+    <div class="chat-tut-row">
+      <div class="card chat-box">
+        <div class="card-title"><span class="ic">?</span>?箄撖寡?</div>
+        <div class="chat-msgs" id="chatMsgs">
+          <div class="msg ai">Hi~ ??拐耨?箄?拇???隡??嚗?霂?雿閬???嚗???亦?誘??</div>
+        </div>
+        <div class="chat-inp">
+          <input type="text" id="chatInput" placeholder="?膩????憒??亦頂皜??賜">
+          <button class="chat-send" onclick="sendChat()">??/button>
+        </div>
+      </div>
+      <div class="card tut-box">
+        <div class="card-title"><span class="ic">??</span>???芸郎</div>
+        <div class="tut-inp">
+          <input type="text" id="tutInput" placeholder="???暹嚗I?芸摮虫?">
+          <button class="tut-btn" onclick="learnTutorial()">?儭?摮虫?</button>
+        </div>
+        <div class="learn-skills" id="learnSkills">
+          <div class="empty-s">蝎斐???暹撘憪郎銋耨?暹???/div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress -->
+    <div class="card progress-section" id="progressSection">
+      <div class="card-title"><span class="ic">??/span>AI憭?銝?/div>
+      <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+      <div class="prog-txt" id="progText">甇????曄???/div>
+      <div class="prog-log" id="progLog"></div>
+    </div>
+
+    <!-- Compare -->
+    <div class="card compare-section" id="compareSection">
+      <div class="card-title"><span class="ic">??</span>??撖寞?</div>
+      <div class="comp-grid">
+        <div class="comp-box">
+          <h4>? 憭???/h4>
+          <div class="comp-img" id="beforeImg"><span class="ph">霂瑚?隡??/span></div>
+        </div>
+        <div class="comp-box">
+          <h4>??憭???/h4>
+          <div class="comp-img" id="afterImg"><span class="ph">?皛日???典???/span></div>
+        </div>
+      </div>
+      <div class="act-row">
+        <button class="act-btn dl" onclick="dlResult()" id="dlBtn" disabled>? 銝蝸</button>
+        <button class="act-btn sh" onclick="shareResult()" id="shBtn" disabled>? ?澈</button>
+        <button class="act-btn rt" onclick="retryRandom()" id="rtBtn" disabled>? ?憌</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Tab: 璅⊥?刻? ===== -->
+  <div class="tab-content" id="tab-tpl">
+    <div class="card">
+      <div class="card-title"><span class="ic">??</span>蝎暸芋?踵??/div>
+      <div class="filter-cats" style="margin-bottom:14px">
+        <button class="filter-cat active" data-tcat="all">?? ?券</button>
+        <button class="filter-cat" data-tcat="beauty">?? 蝢?</button>
+        <button class="filter-cat" data-tcat="filter">? 皛日?</button>
+        <button class="filter-cat" data-tcat="effect">???寞?</button>
+        <button class="filter-cat" data-tcat="style">? 憌</button>
+        <button class="filter-cat" data-tcat="vlog">? Vlog</button>
+      </div>
+      <div class="tpl-grid" id="tplGrid"></div>
+    </div>
+  </div>
+
+  <!-- ===== Tab: 憭?霈啣? ===== -->
+  <div class="tab-content" id="tab-history">
+    <div class="card">
+      <div class="card-title"><span class="ic">??</span>憭?霈啣?</div>
+      <div class="hist-list" id="histList">
+        <div class="empty-s" id="histEmpty">餈瓷???扇敶??颱耨?曉~</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button class="dev-fab" onclick="openDevLogin()" title="撘????>??</button>
+
+<script>
+/* ========== ?拐耨 v2.5 繚 ?典??賢恥?瑞垢 ========== */
+
+// ========== ?嗆?==========
+var S = {
+  file: null, fileUrl: null, selFilter: null,
+  processedUrl: null, processing: false,
+  learned: [], history: [], chat: []
+};
+
+// ========== 皛日??唳摨?30蝘??怠?蝡舐?憸?霈橘?==========
+var filters = [
+  // --- 蝢? ---
+  {id:'natural',cat:'beauty',name:'?芰蝢?',icon:'?',desc:'?﹛蝤函蝢',stars:5},
+  {id:'premium',cat:'beauty',name:'蝎曇??,icon:'??',desc:'擃垢蝎曆耨',stars:5},
+  {id:'korean_glow',cat:'beauty',name:'?拍頂瘞游?',icon:'??,desc:'?拙?瘞游???,stars:4},
+  {id:'japanese_sweet',cat:'beauty',name:'?亦頂??',icon:'?',desc:'蝎???',stars:4},
+  {id:'warm_sun',cat:'beauty',name:'???,icon:'??',desc:'???亙熒??,stars:4},
+  {id:'pink_mist',cat:'beauty',name:'蝎',icon:'?儭?,desc:'蝎咿???,stars:3},
+  // --- 靚 ---
+  {id:'bright',cat:'tone',name:'?漁',icon:'?儭?,desc:'?港??漁',stars:3},
+  {id:'contrast',cat:'tone',name:'擃笆瘥?,icon:'??',desc:'撘箇?撖寞?',stars:3},
+  {id:'soft_glow',cat:'tone',name:'??',icon:'??',desc:'???西',stars:4},
+  {id:'natural_vivid',cat:'tone',name:'?芰斢',icon:'??',desc:'憓弗??,stars:4},
+  {id:'pastel',cat:'tone',name:'瘛∪蔗',icon:'?',desc:'雿弗??敶?,stars:3},
+  {id:'cream_skin',cat:'tone',name:'憟嗆硃??,icon:'?',desc:'憟嗆硃??',stars:4},
+  // --- ?嗥? ---
+  {id:'vintage',cat:'film',name:'憭?嗥?',icon:'??儭?,desc:'??憭',stars:5},
+  {id:'cinematic',cat:'film',name:'?萄蔣??,icon:'?',desc:'?萄蔣摰賢?靚?,stars:4},
+  {id:'retro_warm',cat:'film',name:'憭??',icon:'?',desc:'???',stars:3},
+  {id:'bw',cat:'film',name:'暺',icon:'??,desc:'蝏暺',stars:3},
+  {id:'japan_fresh',cat:'film',name:'?亦頂皜',icon:'?',desc:'擃漁??',stars:4},
+  {id:'sunset',cat:'film',name:'?亥??,icon:'??',desc:'璈滯瘞',stars:4},
+  // --- ?? ---
+  {id:'cyberpunk',cat:'style',name:'韏???',icon:'??',desc:'蝝怨??',stars:4},
+  {id:'invert',cat:'style',name:'?蓮??,icon:'??',desc:'?脣蔗?蓮',stars:3},
+  {id:'sketch',cat:'style',name:'蝝?',icon:'??',desc:'??蝝?',stars:4},
+  {id:'blue_tone',cat:'style',name:'??',icon:'?',desc:'?瑁?敹折?',stars:3},
+  {id:'dark_mood',cat:'style',name:'??',icon:'??',desc:'雿???',stars:3},
+  {id:'anime',cat:'style',name:'?冽憤憌?,icon:'?',desc:'?⊿靚?,stars:4},
+  // --- ?亦頂銝掩 ---
+  {id:'japan_soft',cat:'japanese',name:'??亦頂',icon:'?儭?,desc:'??餈?',stars:4},
+  {id:'japan_milk',cat:'japanese',name:'?扒??,icon:'??',desc:'憟嗥?漁',stars:4},
+  // --- ?拍頂銝掩 ---
+  {id:'korea_cool',cat:'korean',name:'?瑞??,icon:'??',desc:'???瑞',stars:5},
+  {id:'korea_glass',cat:'korean',name:'?餌???,icon:'??',desc:'????,stars:4}
+];
+
+document.getElementById('fCount').textContent = filters.length;
+
+// ========== 皛日?撘?嚗anvas 2D ??蝝?==========
+var FE = {
+  apply: function(d, id) {
+    var l=d.length,i;
+    switch(id) {
+      // 蝢?蝟?      case 'natural':
+        for(i=0;i<l;i+=4){
+          var a=(d[i]+d[i+1]+d[i+2])/3;
+          d[i]=M(255,M(0,a+(d[i]-a)*1.2+3));
+          d[i+1]=M(255,M(0,a+(d[i+1]-a)*1.2+3));
+          d[i+2]=M(255,M(0,a+(d[i+2]-a)*1.2+3));
+          d[i+1]=M(255,d[i+1]+5);
+          d[i+2]=M(255,d[i+2]+8);
+        } break;
+      case 'premium':
+        for(i=0;i<l;i+=4){
+          var a=(d[i]+d[i+1]+d[i+2])/3;
+          d[i]=M(255,M(0,a+(d[i]-a)*1.4+5));
+          d[i+1]=M(255,M(0,a+(d[i+1]-a)*1.4+5));
+          d[i+2]=M(255,M(0,a+(d[i+2]-a)*1.4+5));
+          d[i]=M(255,d[i]+4);d[i+2]=M(255,d[i+2]+4);
+        } break;
+      case 'korean_glow':
+        for(i=0;i<l;i+=4){
+          d[i]=M(255,d[i]*1.08+12);d[i+1]=M(255,d[i+1]*1.06+10);
+          d[i+2]=M(255,d[i+2]*1.04+8);
+          d[i+1]=M(255,d[i+1]+8);
+        } break;
+      case 'japanese_sweet':
+        for(i=0;i<l;i+=4){
+          d[i]=M(255,d[i]*1.05+15);d[i+1]=M(255,d[i+1]*0.97+8);
+          d[i+2]=M(255,d[i+2]*0.92+12);
+        } break;
+      case 'warm_sun':
+        for(i=0;i<l;i+=4){
+          d[i]=M(255,d[i]*1.06+10);d[i+1]=M(255,d[i+1]*1.03+5);
+          d[i+2]=M(255,d[i+2]*0.94);
+        } break;
+      case 'pink_mist':
+        for(i=0;i<l;i+=4){
+          d[i]=M(255,d[i]*1.04+14);d[i+1]=M(255,d[i+1]*0.95+6);
+          d[i+2]=M(255,d[i+2]*0.93+8);
+        } break;
+      // 靚
+      case 'bright':for(i=0;i<l;i+=4){d[i]=M(255,d[i]+22);d[i+1]=M(255,d[i+1]+22);d[i+2]=M(255,d[i+2]+22);}break;
+      case 'contrast':for(i=0;i<l;i+=4){d[i]=M(255,M(0,(d[i]-128)*1.5+128));d[i+1]=M(255,M(0,(d[i+1]-128)*1.5+128));d[i+2]=M(255,M(0,(d[i+2]-128)*1.5+128));}break;
+      case 'soft_glow':for(i=0;i<l;i+=4){d[i]=M(255,(d[i]+255)*0.6);d[i+1]=M(255,(d[i+1]+255)*0.6);d[i+2]=M(255,(d[i+2]+255)*0.6);}break;
+      case 'natural_vivid':for(i=0;i<l;i+=4){var g=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];d[i]=M(255,M(0,g+(d[i]-g)*1.5));d[i+1]=M(255,M(0,g+(d[i+1]-g)*1.5));d[i+2]=M(255,M(0,g+(d[i+2]-g)*1.5));}break;
+      case 'pastel':for(i=0;i<l;i+=4){var gp=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];d[i]=M(255,M(0,gp+(d[i]-gp)*0.4+12));d[i+1]=M(255,M(0,gp+(d[i+1]-gp)*0.4+12));d[i+2]=M(255,M(0,gp+(d[i+2]-gp)*0.4+12));}break;
+      case 'cream_skin':
+        for(i=0;i<l;i+=4){
+          var gc=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];
+          d[i]=M(255,gc*1.1+12);d[i+1]=M(255,gc*1.05+6);d[i+2]=M(255,gc*0.9+4);
+        } break;
+      // ?嗥?
+      case 'vintage':for(i=0;i<l;i+=4){var sv=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];d[i]=M(255,sv*0.95+25);d[i+1]=M(255,sv*0.88+15);d[i+2]=M(255,sv*0.72+5);}break;
+      case 'cinematic':for(i=0;i<l;i+=4){var sc=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];d[i]=M(255,M(0,(d[i]-128)*1.3+130));d[i+1]=M(255,M(0,(d[i+1]-128)*1.3+128));d[i+2]=M(255,M(0,(d[i+2]-128)*1.3+124));}break;
+      case 'retro_warm':for(i=0;i<l;i+=4){var sr=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];d[i]=M(255,sr*1.1+20);d[i+1]=M(255,sr*0.95+10);d[i+2]=M(255,sr*0.75);}break;
+      case 'bw':for(i=0;i<l;i+=4){var g=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];d[i]=d[i+1]=d[i+2]=Math.round(g);}break;
+      case 'japan_fresh':for(i=0;i<l;i+=4){d[i]=M(255,d[i]*1.05+15);d[i+1]=M(255,d[i+1]*1.03+10);d[i+2]=M(255,d[i+2]*1.08+18);}break;
+      case 'sunset':for(i=0;i<l;i+=4){d[i]=M(255,d[i]*1.15+20);d[i+1]=M(255,d[i+1]*0.95+8);d[i+2]=M(255,d[i+2]*0.78);}break;
+      // ??
+      case 'cyberpunk':for(i=0;i<l;i+=4){var gc=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];d[i]=M(255,M(0,(d[i]-128)*1.4+155));d[i+2]=M(255,M(0,(d[i+2]-128)*1.6+145));d[i+1]=M(255,M(0,(d[i+1]-128)*1.1+100));d[i]=M(255,d[i]+15);d[i+2]=M(255,d[i+2]+25);}break;
+      case 'invert':for(i=0;i<l;i+=4){d[i]=255-d[i];d[i+1]=255-d[i+1];d[i+2]=255-d[i+2];}break;
+      case 'sketch':for(i=0;i<l;i+=4){var g=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];d[i]=d[i+1]=d[i+2]=M(255,M(0,255-g*1.2+30));}break;
+      case 'blue_tone':for(i=0;i<l;i+=4){d[i]=M(255,d[i]*0.88);d[i+1]=M(255,d[i+1]*0.92);d[i+2]=M(255,d[i+2]*1.15+20);}break;
+      case 'dark_mood':for(i=0;i<l;i+=4){d[i]=M(255,d[i]*0.7);d[i+1]=M(255,d[i+1]*0.68);d[i+2]=M(255,d[i+2]*0.75);}break;
+      case 'anime':for(i=0;i<l;i+=4){var ga=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];d[i]=M(255,M(0,ga+(d[i]-ga)*1.8+15));d[i+1]=M(255,M(0,ga+(d[i+1]-ga)*1.8+12));d[i+2]=M(255,M(0,ga+(d[i+2]-ga)*1.8+20));}break;
+      // ?亦頂銝掩
+      case 'japan_soft':for(i=0;i<l;i+=4){d[i]=M(255,d[i]*1.12+20);d[i+1]=M(255,d[i+1]*1.08+15);d[i+2]=M(255,d[i+2]*1.10+18);}break;
+      case 'japan_milk':for(i=0;i<l;i+=4){d[i]=M(255,d[i]*1.10+18);d[i+1]=M(255,d[i+1]*1.12+20);d[i+2]=M(255,d[i+2]*1.10+15);}break;
+      // ?拍頂銝掩
+      case 'korea_cool':for(i=0;i<l;i+=4){d[i]=M(255,d[i]*0.92+5);d[i+1]=M(255,d[i+1]*0.95+8);d[i+2]=M(255,d[i+2]*1.10+20);}break;
+      case 'korea_glass':for(i=0;i<l;i+=4){var a=(d[i]+d[i+1]+d[i+2])/3;d[i]=M(255,a+(d[i]-a)*0.8+20);d[i+1]=M(255,a+(d[i+1]-a)*0.8+18);d[i+2]=M(255,a+(d[i+2]-a)*0.8+22);}break;
+    }
+    return d;
+  },
+  process: function(url, id) {
+    return new Promise(function(r){
+      var img=new Image();
+      img.onload=function(){
+        var c=document.createElement('canvas');
+        c.width=img.width;c.height=img.height;
+        var x=c.getContext('2d');
+        x.drawImage(img,0,0);
+        var idt=x.getImageData(0,0,c.width,c.height);
+        idt.data.set(FE.apply(idt.data,id));
+        x.putImageData(idt,0,0);
+        r(c.toDataURL('image/jpeg',0.92));
+      };img.src=url;
+    });
+  }
+};
+var M=Math.min;
+
+// ========== 璅⊥?刻??唳 ==========
+var templates = [
+  {id:'t1',cat:'beauty',name:'?芰蝢?',icon:'?',desc:'?亙虜?芰靽桀',badge:'beauty'},
+  {id:'t2',cat:'beauty',name:'?拍頂瘞游?',icon:'??,desc:'?拙?????,badge:'beauty'},
+  {id:'t3',cat:'beauty',name:'?亦頂??',icon:'?',desc:'蝎咿??憒?,badge:'beauty'},
+  {id:'t4',cat:'beauty',name:'蝎曇憒?',icon:'??',desc:'擃?靽桀',badge:'beauty'},
+  {id:'t5',cat:'filter',name:'憟嗆硃??,icon:'?',desc:'憟嗆硃??',badge:'filter'},
+  {id:'t6',cat:'filter',name:'蝎皛日?',icon:'?儭?,desc:'??蝎?',badge:'filter'},
+  {id:'t7',cat:'filter',name:'?亥??',icon:'??',desc:'皜拇?璈?',badge:'filter'},
+  {id:'t8',cat:'filter',name:'?瑞??,icon:'??',desc:'皜??,badge:'filter'},
+  {id:'t9',cat:'effect',name:'?嗥?韐冽?',icon:'??儭?,desc:'憭?嗥?',badge:'effect'},
+  {id:'t10',cat:'effect',name:'?萄蔣??,icon:'?',desc:'摰賢??萄蔣',badge:'effect'},
+  {id:'t11',cat:'effect',name:'蝝?憌',icon:'??',desc:'??蝝?',badge:'effect'},
+  {id:'t12',cat:'effect',name:'?冽憤憌?,icon:'?',desc:'?⊿?',badge:'effect'},
+  {id:'t13',cat:'style',name:'韏???',icon:'??',desc:'蝝怨??',badge:'style'},
+  {id:'t14',cat:'style',name:'??敹折?',icon:'?',desc:'?瑁?靚?,badge:'style'},
+  {id:'t15',cat:'style',name:'暺蝏',icon:'??,desc:'暺',badge:'style'},
+  {id:'t16',cat:'style',name:'??憌?,icon:'??',desc:'雿???',badge:'style'},
+  {id:'t17',cat:'vlog',name:'Vlog撠',icon:'?',desc:'?剛?憸??Ｖ???,badge:'vlog'},
+  {id:'t18',cat:'vlog',name:'蝢?靚',icon:'??',desc:'憌?脤???,badge:'vlog'}
+];
+
+// ========== 皜脫? ==========
+function renderFilters(cat) {
+  var g=document.getElementById('filterGrid');
+  var s = filters.filter(function(f){
+    if(cat==='all')return true;
+    if(cat==='learned')return S.learned.indexOf(f.id)!==-1;
+    return f.cat===cat;
+  });
+  if(cat==='learned' && s.length===0){
+    g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:24px;color:var(--text-muted);font-size:13px;">?? 餈瓷摮血??踝?蝎斐???暹撘憪郎銋?/div>';
+    return;
+  }
+  g.innerHTML=s.map(function(f){
+    var a=S.selFilter===f.id?' active':'';
+    var st=Array(f.stars).fill('??).join('')+Array(5-f.stars).fill('??).join('');
+    return '<div class="fc'+a+'" onclick="selectFilter(\''+f.id+'\')">'+
+      '<div class="fi">'+f.icon+'</div>'+
+      '<div class="fn">'+f.name+'</div>'+
+      '<div class="fd">'+f.desc+'</div>'+
+      '<div class="f-stars">'+st+'</div></div>';
+  }).join('');
+}
+
+function renderTemplates(cat) {
+  var g=document.getElementById('tplGrid');
+  var s=cat==='all'?templates:templates.filter(function(t){return t.cat===cat;});
+  g.innerHTML=s.map(function(t){
+    return '<div class="tpl-card" onclick="applyTemplate(\''+t.id+'\')">'+
+      '<div class="ti">'+t.icon+'</div>'+
+      '<div class="tn">'+t.name+'</div>'+
+      '<div class="td">'+t.desc+'</div>'+
+      '<span class="tb '+t.badge+'">'+t.cat+'</span></div>';
+  }).join('');
+}
+
+// ========== ?皛日? ==========
+function selectFilter(id) {
+  S.selFilter=id;
+  document.querySelectorAll('.fc').forEach(function(c){c.classList.remove('active');});
+  var el=document.querySelector('.fc[onclick*="'+id+'"]');
+  if(el)el.classList.add('active');
+  var f=filters.find(function(x){return x.id===id;});
+  if(f) addMsg('ai','撌脤?+f.icon+' '+f.name+'???潘?');
+  if(S.file) startProc();
+}
+
+// ========== 摨璅⊥ ==========
+function applyTemplate(tid) {
+  var t=templates.find(function(x){return x.id===tid;});
+  if(!t)return;
+  // ?曉??皛日?
+  var candidates=filters.filter(function(f){
+    return f.name.indexOf(t.name)!==-1||f.desc.indexOf(t.desc)!==-1||f.cat===t.cat;
+  });
+  if(candidates.length>0){
+    S.selFilter=candidates[0].id;
+    renderFilters(document.querySelector('.filter-cat.active')?.dataset?.cat||'all');
+    var el=document.querySelector('.fc[onclick*="'+candidates[0].id+'"]');
+    if(el)el.classList.add('active');
+    addMsg('ai','?? 撌脣??冽芋?踴?+t.icon+' '+t.name+'??);
+    // ?靽桀tab
+    switchTab('tab-edit');
+    if(S.file) startProc();
+  }
+}
+
+// ========== ??掩?倌 ==========
+document.getElementById('filterCats').addEventListener('click',function(e){
+  var b=e.target.closest('.filter-cat');
+  if(!b)return;
+  document.querySelectorAll('#filterCats .filter-cat').forEach(function(t){t.classList.remove('active');});
+  b.classList.add('active');
+  renderFilters(b.dataset.cat);
+});
+
+// 璅⊥?掩
+document.addEventListener('click',function(e){
+  var b=e.target.closest('[data-tcat]');
+  if(!b||!e.target.closest('#tab-tpl'))return;
+  document.querySelectorAll('#tab-tpl .filter-cat').forEach(function(t){t.classList.remove('active');});
+  b.classList.add('active');
+  renderTemplates(b.dataset.tcat);
+});
+
+// ========== 銝蓉AB? ==========
+document.querySelector('.main-tabs').addEventListener('click',function(e){
+  var b=e.target.closest('.main-tab');
+  if(!b)return;
+  switchTab(b.dataset.tab);
+});
+function switchTab(id){
+  document.querySelectorAll('.main-tab').forEach(function(t){t.classList.remove('active');});
+  document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active');});
+  var tb=document.querySelector('.main-tab[data-tab="'+id+'"]');
+  if(tb)tb.classList.add('active');
+  var tc=document.getElementById(id);
+  if(tc)tc.classList.add('active');
+}
+
+// ========== ?辣銝? ==========
+var uz=document.getElementById('uploadZone');
+var fi=document.getElementById('fileInput');
+uz.addEventListener('click',function(){fi.click();});
+uz.addEventListener('dragover',function(e){e.preventDefault();this.classList.add('dragover');});
+uz.addEventListener('dragleave',function(){this.classList.remove('dragover');});
+uz.addEventListener('drop',function(e){
+  e.preventDefault();this.classList.remove('dragover');
+  if(e.dataTransfer.files.length>0)handleFile(e.dataTransfer.files[0]);
+});
+fi.addEventListener('change',function(e){
+  if(e.target.files.length>0)handleFile(e.target.files[0]);
+});
+
+function handleFile(f){
+  var ok=['image/jpeg','image/png','image/webp','image/jpg'];
+  if(ok.indexOf(f.type)===-1){toast('霂瑚?隡?撘?,'err');return;}
+  if(f.size>50*1024*1024){toast('?曄?銝頞?50MB','err');return;}
+  S.file=f;
+  var r=new FileReader();
+  r.onload=function(e){
+    S.fileUrl=e.target.result;
+    document.getElementById('beforeImg').innerHTML='<img src="'+e.target.result+'">';
+    document.getElementById('afterImg').innerHTML='<span class="ph">?皛日???典???/span>';
+    document.getElementById('dlBtn').disabled=true;
+    document.getElementById('shBtn').disabled=true;
+    document.getElementById('rtBtn').disabled=true;
+    toast('銝???嚗窈?誘??,'ok');
+    if(S.selFilter)startProc();
+  };r.readAsDataURL(f);
+}
+
+// ========== 憭?撘? ==========
+function startProc(){
+  if(S.processing||!S.fileUrl||!S.selFilter)return;
+  S.processing=true;
+  var ps=document.getElementById('progressSection');
+  ps.style.display='block';
+  document.getElementById('compareSection').style.display='none';
+  document.getElementById('progFill').style.width='0%';
+  document.getElementById('progLog').innerHTML='';
+  document.getElementById('progText').textContent='甇????曄????;
+
+  var f=filters.find(function(x){return x.id===S.selFilter;});
+  var steps=[
+    {t:'? 霂餃????,p:12,d:300},
+    {t:'? ???脣蔗????,p:28,d:400},
+    {t:'??摨??+f.name+'???潑?,p:52,d:600},
+    {t:'?? ??蝝?????,p:78,d:500},
+    {t:'??憭?摰?嚗?,p:100,d:300}
+  ];
+  runSteps(steps,0,function(){
+    FE.process(S.fileUrl,S.selFilter).then(function(r){
+      S.processedUrl=r;
+      document.getElementById('afterImg').innerHTML='<img src="'+r+'">';
+      document.getElementById('progressSection').style.display='none';
+      document.getElementById('compareSection').style.display='block';
+      document.getElementById('dlBtn').disabled=false;
+      document.getElementById('shBtn').disabled=false;
+      document.getElementById('rtBtn').disabled=false;
+      S.processing=false;
+      // 霈啣??
+      S.history.unshift({filter:f?f.name:'?芰',icon:f?f.icon:'?',time:new Date().toLocaleString(),url:S.processedUrl});
+      renderHistory();
+      toast('??憭?摰?嚗?????,'ok');
+    });
+  });
+}
+
+function runSteps(steps,i,done){
+  if(i>=steps.length){done();return;}
+  var s=steps[i];
+  document.getElementById('progFill').style.width=s.p+'%';
+  document.getElementById('progText').textContent=s.t;
+  addLog(s.t,'info');
+  setTimeout(function(){runSteps(steps,i+1,done);},s.d);
+}
+
+function addLog(t,type){
+  var l=document.getElementById('progLog');
+  var e=document.createElement('div');
+  e.className='pl '+(type||'info');
+  e.textContent='['+new Date().toLocaleTimeString()+'] '+t;
+  l.appendChild(e);l.scrollTop=l.scrollHeight;
+}
+
+// ========== 銝蝸 / ?澈 / ? ==========
+function dlResult(){
+  if(!S.processedUrl){toast('餈瓷????,'err');return;}
+  var a=document.createElement('a');
+  a.download='?拐耨_'+S.selFilter+'_'+Date.now()+'.jpg';
+  a.href=S.processedUrl;a.click();
+  toast('銝蝸??嚗?,'ok');
+}
+
+function shareResult(){
+  if(!S.processedUrl){toast('餈瓷????,'err');return;}
+  if(navigator.share){navigator.share({title:'?拐耨AI靽桀',text:'?典靽唧I憭????'});}else{
+    var c=document.createElement('canvas');
+    var img=new Image();
+    img.onload=function(){
+      c.width=img.width;c.height=img.height;
+      c.getContext('2d').drawImage(img,0,0);
+      c.toBlob(function(blob){
+        navigator.clipboard.write([new ClipboardItem({'image/png':blob})])
+          .then(function(){toast('撌脣??嗅?芾斐??','ok');})
+          .catch(function(){toast('憭憭梯揖嚗銝蝸?','err');});
+      });
+    };img.src=S.processedUrl;
+  }
+}
+
+function retryRandom(){
+  var fs=filters.map(function(f){return f.id;});
+  var av=fs.filter(function(id){return id!==S.selFilter;});
+  var pick=av[Math.floor(Math.random()*av.length)];
+  S.selFilter=pick;
+  document.querySelectorAll('.fc').forEach(function(c){c.classList.remove('active');});
+  var el=document.querySelector('.fc[onclick*="'+pick+'"]');
+  if(el)el.classList.add('active');
+  var f=filters.find(function(x){return x.id===pick;});
+  addMsg('ai','? ???喋?+f.icon+' '+f.name+'??);
+  startProc();
+}
+
+// ========== ?予 ==========
+var cr = {
+  '?瑞':'?瑞?格???撣桐??葉?蝟餃?賬?儭?,
+  '??:'?唾??踝?霂??蝟餃?賜????憟嗉???,
+  '蝢?':'?芰蝢?摰?嚗??,
+  '蝎曆耨':'蝎曇?移靽格芋撘??,
+  '?芰':'?芰蝢?璅∪??',
+  '?亦頂':'?亦頂憌嚗葉?蝟餌?蝢??蝟餅??啜??,
+  '?拍頂':'?拍頂憌?乩?嚗葉?蝟餅偌?',
+  '瘞游?':'?拍頂瘞游????',
+  '憭':'憭?嗥????',
+  '?嗥?':'?嗥?憌嚗??方???萄蔣???,
+  '蝎?:'蝎咿??嚗??整??蝟餌?蝢??,
+  '??:'??憌嚗葉?蝟餌?蝢??,
+  '??':'?????蝟餅偌?',
+  '?冽憤':'?冽憤憌????,
+  '暺':'暺蝏??,
+  '??:'??憌??',
+  '??:'??敹折??',
+  '斢':'?芰斢??',
+  '瘛?:'瘛∪蔗???',
+  '撖寞?':'擃笆瘥漲??',
+  '鈭?:'?漁???儭?,
+  '韏?':'韏?????',
+  '?蓮':'?蓮?莞??,
+  '蝝?':'蝝?憌??',
+  '?亥':'?亥???',
+  '?萄蔣':'?萄蔣???,
+  '憟嗆硃':'憟嗆硃???,
+  '?餌?':'?餌?????',
+  'Vlog':'Vlog璅⊥?刻?嚗??璅⊥憿萄?',
+  '璅⊥':'?餅芋?踵?△???攻??,
+  'help':'雿輻??: 1儭銝??曄? 2儭?誘??3儭霂湧?瘙?4儭韐湔?蝔?亥摮?,
+  '暺恕':'Hi~ 霂渲秩雿閬???: ?瑞?柴蝟颯蝟颯??扎瞍徉行??湔?寞誘???'
+};
+
+function sendChat(){
+  var inp=document.getElementById('chatInput');
+  var t=inp.value.trim();
+  if(!t)return;
+  addMsg('user',t);inp.value='';
+  var matched=false;
+  for(var k in cr){
+    if(t.indexOf(k)!==-1){
+      setTimeout(function(r){addMsg('ai',r);},500+Math.random()*300,cr[k]);
+      var found=filters.filter(function(f){return f.name.indexOf(k)!==-1||f.desc.indexOf(k)!==-1;});
+      if(found.length>0&&S.file){
+        setTimeout(function(){
+          S.selFilter=found[0].id;
+          var cat=document.querySelector('#filterCats .filter-cat.active')?.dataset?.cat||'all';
+          renderFilters(cat);
+          var el=document.querySelector('.fc[onclick*="'+found[0].id+'"]');
+          if(el)el.classList.add('active');
+          startProc();
+        },1400);
+      }
+      matched=true;break;
+    }
+  }
+  if(!matched){
+    setTimeout(function(){addMsg('ai','霂?霂? ?瑞?柴蝟颯??扎瞍怒????行??寞誘????);},400);
+  }
+}
+
+function addMsg(role,txt){
+  var c=document.getElementById('chatMsgs');
+  var e=document.createElement('div');
+  e.className='msg '+role;
+  e.textContent=txt;
+  c.appendChild(e);c.scrollTop=c.scrollHeight;
+}
+
+document.getElementById('chatInput').addEventListener('keydown',function(e){
+  if(e.key==='Enter')sendChat();
+});
+
+// ========== ???芸郎 ==========
+function learnTutorial(){
+  var inp=document.getElementById('tutInput');
+  var url=inp.value.trim();
+  if(!url){toast('颲???暹','err');return;}
+  inp.value='';
+  addMsg('ai','?? 甇?摮虫?: '+url);
+  var msgs=['?? 霈輸憿菟??,'? 銝蝸????,'?? AI??靽桀甇仿炊??,'?? ??????,'??摮虫?摰?嚗?];
+  var idx=0;
+  var iv=setInterval(function(){
+    if(idx<msgs.length){
+      addLog(msgs[idx],'info');idx++;
+    }else{
+      clearInterval(iv);
+      var unlearned=filters.filter(function(f){return S.learned.indexOf(f.id)===-1;});
+      if(unlearned.length===0){
+        addMsg('ai','?? ?券皛日?撌脣郎摰?');toast('?券摮血?嚗?,'ok');return;
+      }
+      var picked=unlearned[Math.floor(Math.random()*unlearned.length)];
+      S.learned.push(picked.id);
+      renderLearned();
+      addMsg('ai','?? 摮虫??唳??賬?+picked.icon+' '+picked.name+'??);
+      toast('?? 摮虫???+picked.name+'??,'ok');
+    }
+  },700);
+}
+
+function renderLearned(){
+  var c=document.getElementById('learnSkills');
+  if(S.learned.length===0){
+    c.innerHTML='<div class="empty-s">蝎斐???暹撘憪郎銋耨?暹???/div>';return;
+  }
+  c.innerHTML=S.learned.map(function(id){
+    var f=filters.find(function(x){return x.id===id;});
+    return '<div class="ls"><span>'+(f?f.icon:'??')+' '+(f?f.name:id)+'</span><span class="lb">撌脣郎</span></div>';
+  }).join('');
+}
+
+// ========== ?霈啣? ==========
+function renderHistory(){
+  var c=document.getElementById('histList');
+  if(S.history.length===0){
+    c.innerHTML='<div class="empty-s">餈瓷???扇敶??颱耨?曉~</div>';return;
+  }
+  c.innerHTML=S.history.map(function(h,i){
+    return '<div class="hist-item" onclick="restoreFromHistory('+i+')">'+
+      '<span class="hi-filter">'+h.icon+' '+h.filter+'</span>'+
+      '<span style="color:var(--text-muted)">'+h.time+'</span></div>';
+  }).join('');
+}
+
+function restoreFromHistory(i){
+  var h=S.history[i];
+  toast('撌脫???? '+h.filter,'inf');
+}
+
+// ========== 撘?恕霂?==========
+var DA={u:'lixiu-ohye',p:'myy123456',a:false,login:function(u,p){if(u===this.u&&p===this.p){this.a=true;return true;}return false;},logout:function(){this.a=false;}};
+
+function openDevLogin(){
+  var m=document.createElement('div');
+  m.className='modal-overlay';
+  m.onclick=function(e){if(e.target===this)m.remove();};
+  m.innerHTML='<div class="modal-box"><h2>?? 撘????/h2><p class="ml">霂瑁??亥揭?瑕???/p>'+
+    '<input type="text" class="modal-inp" id="devUser" placeholder="撘?揭?? autofocus>'+
+    '<input type="password" class="modal-inp" id="devPass" placeholder="撘????>'+
+    '<button class="modal-btn pri" onclick="authDev()">?餃?</button>'+
+    '<button class="modal-btn sec" onclick="this.closest(\'.modal-overlay\').remove()">??</button></div>';
+  document.body.appendChild(m);
+  setTimeout(function(){
+    var u=document.getElementById('devUser'),p=document.getElementById('devPass');
+    if(u)u.addEventListener('keydown',function(e){if(e.key==='Enter'&&p)p.focus();});
+    if(p)p.addEventListener('keydown',function(e){if(e.key==='Enter')authDev();});
+    if(u)u.focus();
+  },50);
+}
+
+function authDev(){
+  var u=document.getElementById('devUser').value.trim();
+  var p=document.getElementById('devPass').value.trim();
+  if(!u||!p){toast('霂瑁??亥揭?瑕?撖?','err');return;}
+  if(DA.login(u,p)){
+    document.querySelectorAll('.modal-overlay').forEach(function(m){m.remove();});
+    toast('?餃???嚗?,'ok');
+    showDash();
+  }else{toast('韐血????霂?,'err');}
+}
+
+function showDash(){
+  var m=document.createElement('div');
+  m.className='modal-overlay';
+  m.onclick=function(e){if(e.target===this)m.remove();};
+  var now=new Date().toLocaleString();
+  m.innerHTML='<div class="modal-box"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">'+
+    '<h2 style="margin:0;font-size:17px;">?? 撘????/h2>'+
+    '<button onclick="closeDash()" style="padding:5px 12px;background:rgba(200,160,140,0.08);border:none;border-radius:8px;cursor:pointer;font-size:12px;">???/button></div>'+
+    '<p style="font-size:12px;color:var(--text-muted);margin-bottom:14px;">撘?? <strong>lixiu-ohye</strong></p>'+
+    '<div class="dash-g">'+
+    '<div class="dash-i"><span>?祈撘?</span><span class="st on">??餈?銝?/span></div>'+
+    '<div class="dash-i"><span>AI摮虫???/span><span class="st on">??餈?銝?/span></div>'+
+    '<div class="dash-i"><span>皛日?撘?</span><span class="st on">??Canvas 2D</span></div>'+
+    '<div class="dash-i"><span>銝活?湔</span><span style="font-weight:600;color:var(--rose-dark)">'+now+'</span></div>'+
+    '</div>'+
+    '<div class="dash-i" style="margin-top:8px;"><span>?</span><span style="font-weight:600;">v2.5 繚 '+filters.length+'皛日?</span></div>'+
+    '<div class="dash-i" style="margin-top:4px;"><span>撌脣郎???/span><span style="font-weight:600;color:var(--success)">'+S.learned.length+'銝?/span></div>'+
+    '<div class="dash-i" style="margin-top:4px;"><span>憭?霈啣?</span><span style="font-weight:600;">'+S.history.length+'??/span></div>'+
+    '</div>';
+  document.body.appendChild(m);
+}
+
+function closeDash(){DA.logout();document.querySelectorAll('.modal-overlay').forEach(function(m){m.remove();});}
+
+// ========== Toast ==========
+function toast(msg,tp){
+  var e=document.createElement('div');
+  e.className='toast '+(tp||'inf');
+  e.textContent=msg;
+  document.body.appendChild(e);
+  setTimeout(function(){if(e.parentElement)e.remove();},3000);
+}
+
+// ========== ????==========
+document.addEventListener('DOMContentLoaded',function(){
+  renderFilters('all');
+  renderTemplates('all');
+  renderHistory();
+});
+</script>
+</body>
+</html>
