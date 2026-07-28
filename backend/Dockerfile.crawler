@@ -1,6 +1,1 @@
-FROM python:3.11-slim
-WORKDIR /app
-COPY crawler_requirements.txt .
-RUN pip install --no-cache-dir -r crawler_requirements.txt
-COPY . .
-CMD ["python", "run_crawler.py"]
+FROM python:3.11-slim\nWORKDIR /app\nCOPY crawler_requirements.txt .\nRUN pip install --no-cache-dir -r crawler_requirements.txt\nCOPY . .\nCMD ["python", "run_crawler.py"]
