@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>系统状态 - 哩修 AI影像助手</title>
+<style>
+:root{--bg:#0f0f1a;--card:#1a1a2e;--green:#4ade80;--red:#f87171;--yellow:#fbbf24;--text:#e2e8f0;--text-secondary:#94a3b8}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:'Inter','Noto Sans SC',sans-serif;min-height:100vh;padding:40px 20px}
+.container{max-width:800px;margin:0 auto}
+.header{text-align:center;margin-bottom:40px}
+.header h1{font-size:2rem;background:linear-gradient(135deg,#ff6b9d,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.status-grid{display:grid;gap:16px}
+.status-card{background:var(--card);border:1px solid #2d2d4a;border-radius:12px;padding:20px;display:flex;align-items:center;justify-content:space-between}
+.status-left{display:flex;align-items:center;gap:12px}
+.status-dot{width:12px;height:12px;border-radius:50%;animation:pulse 2s infinite}
+.status-dot.online{background:var(--green);box-shadow:0 0 10px var(--green)}
+.status-dot.offline{background:var(--red);box-shadow:0 0 10px var(--red)}
+.status-dot.degraded{background:var(--yellow);box-shadow:0 0 10px var(--yellow)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+.status-name{font-weight:600}.status-info{font-size:0.85rem;color:var(--text-secondary)}
+.metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:24px}
+.metric-card{background:var(--card);border:1px solid #2d2d4a;border-radius:12px;padding:16px;text-align:center}
+.metric-value{font-size:2rem;font-weight:700;background:linear-gradient(135deg,#ff6b9d,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.metric-label{font-size:0.8rem;color:var(--text-secondary);margin-top:4px}
+.refresh-btn{display:block;margin:24px auto;padding:12px 24px;background:linear-gradient(135deg,#ff6b9d,#c084fc);color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:1rem;transition:transform .2s}
+.refresh-btn:hover{transform:scale(1.05)}
+.last-updated{text-align:center;color:var(--text-secondary);font-size:.8rem;margin-top:12px}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header"><h1>📊 系统状态监控</h1><p style="color:var(--text-secondary)">哩修 AI影像助手 v3.0.0</p></div>
+<div class="status-grid" id="statusGrid"></div>
+<div class="metrics-grid" id="metricsGrid"></div>
+<button class="refresh-btn" onclick="refreshStatus()">🔄 刷新状态</button>
+<p class="last-updated" id="lastUpdated"></p>
+</div>
+<script>
+async function fetchStatus(){try{const r=await fetch('/health');return await r.json()}catch(e){return{status:'error',message:e.message}}}
+async function refreshStatus(){
+const d=await fetchStatus()
+const services=[
+{name:'API服务',key:'api',info:'后端API服务'},{name:'AI学习系统',key:'learner',info:'持续学习引擎'},
+{name:'Redis缓存',key:'redis',info:'缓存和队列'},{name:'MongoDB数据库',key:'mongodb',info:'主数据库'},
+{name:'爬虫服务',key:'crawler',info:'教程采集'},{name:'任务队列',key:'celery',info:'Celery Worker'}]
+document.getElementById('statusGrid').innerHTML=services.map(s=>{
+const st=d.services?.[s.key]||'unknown'
+const dc=st==='running'?'online':st==='degraded'?'degraded':'offline'
+const txt=st==='running'?'运行中':st==='degraded'?'降级':'离线'
+return `<div class="status-card"><div class="status-left"><div class="status-dot ${dc}"></div><div><div class="status-name">${s.name}</div><div class="status-info">${s.info}</div></div></div><span style="color:${st==='running'?'var(--green)':'var(--red)'}">${txt}</span></div>`
+}).join('')
+const metrics=[
+{value:d.metrics?.uptime||'--',label:'运行时间(小时)'},{value:d.metrics?.requests||'--',label:'总请求数'},
+{value:d.metrics?.skills||'--',label:'已学技能'},{value:d.metrics?.success_rate||'--',label:'成功率(%)'}]
+document.getElementById('metricsGrid').innerHTML=metrics.map(m=>`<div class="metric-card"><div class="metric-value">${m.value}</div><div class="metric-label">${m.label}</div></div>`).join('')
+document.getElementById('lastUpdated').textContent=`最后更新: ${new Date().toLocaleString('zh-CN')}`}
+refreshStatus();setInterval(refreshStatus,30000)
+</script>
+</body>
+</html>
