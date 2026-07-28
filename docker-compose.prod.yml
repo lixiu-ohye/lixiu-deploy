@@ -4,28 +4,24 @@ services:
   nginx:
     image: nginx:alpine
     container_name: lixiu-nginx
-    ports:
-      - "80:80"
-      - "443:443"
+    ports: ["80:80", "443:443"]
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/ssl:/etc/nginx/ssl:ro
       - ./frontend:/usr/share/nginx/html:ro
       - ./data/outputs:/usr/share/nginx/html/outputs:ro
-    depends_on:
-      - backend
+      - ./logs/nginx:/var/log/nginx
+    depends_on: [backend]
     restart: unless-stopped
-    networks:
-      - lixiu-network
+    networks: [lixiu-network]
 
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile.prod
     container_name: lixiu-backend
-    expose:
-      - "8000"
-    environment:
+    expose: ["8000"]
+    environment: &backend_env
       - ENV=production
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
@@ -34,22 +30,16 @@ services:
     volumes:
       - ./data/uploads:/app/uploads
       - ./data/outputs:/app/outputs
+      - ./data/models:/app/models
     depends_on:
-      redis:
-        condition: service_healthy
-      mongodb:
-        condition: service_healthy
+      redis: { condition: service_healthy }
+      mongodb: { condition: service_healthy }
     restart: unless-stopped
-    networks:
-      - lixiu-network
+    networks: [lixiu-network]
     deploy:
       resources:
-        limits:
-          cpus: '2'
-          memory: 4G
-        reservations:
-          cpus: '1'
-          memory: 2G
+        limits: { cpus: '2', memory: 4G }
+        reservations: { cpus: '1', memory: 2G }
 
   celery-worker:
     build:
@@ -57,17 +47,12 @@ services:
       dockerfile: Dockerfile.prod
     container_name: lixiu-celery
     command: celery -A main.celery worker --loglevel=info --concurrency=4 -Q image_processing,video_processing
-    environment:
-      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
-      - MONGODB_URL=mongodb://${MONGO_USER}:${MONGO_PASSWORD}@mongodb:27017/lixiu?authSource=admin
+    environment: *backend_env
     volumes:
       - ./data:/app/data
-    depends_on:
-      - redis
-      - mongodb
+    depends_on: [redis, mongodb]
     restart: unless-stopped
-    networks:
-      - lixiu-network
+    networks: [lixiu-network]
 
   celery-beat:
     build:
@@ -77,11 +62,9 @@ services:
     command: celery -A main.celery beat --loglevel=info
     environment:
       - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
-    depends_on:
-      - redis
+    depends_on: [redis]
     restart: unless-stopped
-    networks:
-      - lixiu-network
+    networks: [lixiu-network]
 
   crawler:
     build:
@@ -93,27 +76,30 @@ services:
       - MONGODB_URL=mongodb://${MONGO_USER}:${MONGO_PASSWORD}@mongodb:27017/lixiu?authSource=admin
     volumes:
       - ./data/crawler_data:/app/crawler_data
-    depends_on:
-      - redis
-      - mongodb
+    depends_on: [redis, mongodb]
     restart: unless-stopped
-    networks:
-      - lixiu-network
+    networks: [lixiu-network]
 
   redis:
     image: redis:7-alpine
     container_name: lixiu-redis
     command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD} --maxmemory 512mb --maxmemory-policy allkeys-lru
-    volumes:
-      - redis_data:/data
+    volumes: [redis_data:/data]
     healthcheck:
       test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      interval: 10s; timeout: 5s; retries: 5
     restart: unless-stopped
-    networks:
-      - lixiu-network
+    networks: [lixiu-network]
+
+  redis-exporter:
+    image: oliver006/redis_exporter:latest
+    container_name: lixiu-redis-exporter
+    environment:
+      - REDIS_ADDR=redis://:${REDIS_PASSWORD}@redis:6379
+    ports: ["9121:9121"]
+    depends_on: [redis]
+    restart: unless-stopped
+    networks: [lixiu-network]
 
   mongodb:
     image: mongo:7
@@ -127,29 +113,67 @@ services:
       - ./backend/db/init.js:/docker-entrypoint-initdb.d/init.js:ro
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongosh --quiet -u ${MONGO_USER} -p ${MONGO_PASSWORD} --authenticationDatabase admin
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      interval: 10s; timeout: 5s; retries: 5
     restart: unless-stopped
-    networks:
-      - lixiu-network
+    networks: [lixiu-network]
+
+  mongo-exporter:
+    image: percona/mongodb_exporter:latest
+    container_name: lixiu-mongo-exporter
+    environment:
+      - MONGODB_URI=mongodb://${MONGO_USER}:${MONGO_PASSWORD}@mongodb:27017
+    ports: ["9216:9216"]
+    depends_on: [mongodb]
+    restart: unless-stopped
+    networks: [lixiu-network]
+
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:latest
+    container_name: lixiu-nginx-exporter
+    command: -nginx.scrape-uri http://nginx:80/nginx_status
+    depends_on: [nginx]
+    restart: unless-stopped
+    networks: [lixiu-network]
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: lixiu-node-exporter
+    command:
+      - '--path.rootfs=/host'
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    pid: host
+    volumes:
+      - /:/host:ro,rslave
+    restart: unless-stopped
+    networks: [lixiu-network]
+
+  celery-exporter:
+    image: danihodovic/celery-exporter:latest
+    container_name: lixiu-celery-exporter
+    environment:
+      - CELERY_BROKER_URL=redis://:${REDIS_PASSWORD}@redis:6379/0
+    ports: ["9808:9808"]
+    depends_on: [redis]
+    restart: unless-stopped
+    networks: [lixiu-network]
 
   prometheus:
     image: prom/prometheus:latest
     container_name: lixiu-prometheus
     volumes:
       - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./monitoring/alerts.yml:/etc/prometheus/alerts.yml:ro
       - prometheus_data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
       - '--web.console.libraries=/usr/share/prometheus/console_libraries'
       - '--web.console.templates=/usr/share/prometheus/consoles'
-    ports:
-      - "9090:9090"
+    ports: ["9090:9090"]
     restart: unless-stopped
-    networks:
-      - lixiu-network
+    networks: [lixiu-network]
 
   grafana:
     image: grafana/grafana:latest
@@ -160,13 +184,10 @@ services:
       - grafana_data:/var/lib/grafana
       - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
       - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources:ro
-    ports:
-      - "3000:3000"
-    depends_on:
-      - prometheus
+    ports: ["3000:3000"]
+    depends_on: [prometheus]
     restart: unless-stopped
-    networks:
-      - lixiu-network
+    networks: [lixiu-network]
 
 volumes:
   redis_data:
