@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>?拐耨 繚 AI?箄?曉?撌亙? v2.5</title>
+<title>哩修 · AI智能图像工坊 v2.5</title>
 <style>
 * {
 margin:0;padding:0;box-sizing:border-box
@@ -377,46 +377,46 @@ header {padding:12px 14px}
   <!-- Header -->
   <header>
     <div class="logo">
-      <div class="logo-icon">?</div>
-      <div class="logo-text">?拐耨 繚 ?箄?曉?撌亙?</div>
+      <div class="logo-icon">🎨</div>
+      <div class="logo-text">哩修 · 智能图像工坊</div>
     </div>
     <div class="header-right">
-      <span class="status-badge"><span class="dot"></span>?賒摮虫?</span>
+      <span class="status-badge"><span class="dot"></span>持续学习</span>
     </div>
   </header>
 
   <!-- Main Tabs -->
   <div class="main-tabs">
-    <button class="main-tab active" data-tab="tab-edit">? 靽桀</button>
-    <button class="main-tab" data-tab="tab-tpl">?? 璅⊥?刻?</button>
-    <button class="main-tab" data-tab="tab-history">?? 憭?霈啣?</button>
+    <button class="main-tab active" data-tab="tab-edit">🎨 修图</button>
+    <button class="main-tab" data-tab="tab-tpl">📋 模板推荐</button>
+    <button class="main-tab" data-tab="tab-history">📂 处理记录</button>
   </div>
 
-  <!-- ===== Tab: 靽桀 ===== -->
+  <!-- ===== Tab: 修图 ===== -->
   <div class="tab-content active" id="tab-edit">
     <!-- Upload -->
     <div class="card">
-      <div class="card-title"><span class="ic">?</span>銝?蝝?</div>
+      <div class="card-title"><span class="ic">📤</span>上传素材</div>
       <div class="upload-zone" id="uploadZone">
-        <div class="ico">??</div>
-        <div class="txt">?孵??曄? ????唳迨憭?/div>
-        <div class="hint">JPG / PNG / WebP ??50MB</div>
+        <div class="ico">📁</div>
+        <div class="txt">点击选择图片 或 拖拽到此处</div>
+        <div class="hint">JPG / PNG / WebP ≤ 50MB</div>
         <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" style="display:none">
       </div>
     </div>
 
     <!-- Filters -->
     <div class="card">
-      <div class="card-title"><span class="ic">?</span>??皛日? 繚 <span id="fCount">0</span>蝘?/div>
+      <div class="card-title"><span class="ic">🎭</span>效果滤镜 · <span id="fCount">0</span>种</div>
       <div class="filter-cats" id="filterCats">
-        <button class="filter-cat active" data-cat="all">?券</button>
-        <button class="filter-cat" data-cat="beauty">?? 蝢?</button>
-        <button class="filter-cat" data-cat="tone">? 靚</button>
-        <button class="filter-cat" data-cat="film">??儭??嗥?</button>
-        <button class="filter-cat" data-cat="style">????</button>
-        <button class="filter-cat" data-cat="japanese">? ?亦頂</button>
-        <button class="filter-cat" data-cat="korean">?? ?拍頂</button>
-        <button class="filter-cat" data-cat="learned">?? ?芸郎</button>
+        <button class="filter-cat active" data-cat="all">全部</button>
+        <button class="filter-cat" data-cat="beauty">💄 美颜</button>
+        <button class="filter-cat" data-cat="tone">🎨 调色</button>
+        <button class="filter-cat" data-cat="film">🎞️ 胶片</button>
+        <button class="filter-cat" data-cat="style">✨ 创意</button>
+        <button class="filter-cat" data-cat="japanese">🌸 日系</button>
+        <button class="filter-cat" data-cat="korean">🇰🇷 韩系</button>
+        <button class="filter-cat" data-cat="learned">🧠 自学</button>
       </div>
       <div class="filter-grid" id="filterGrid"></div>
     </div>
@@ -424,141 +424,142 @@ header {padding:12px 14px}
     <!-- Chat + Tutorial -->
     <div class="chat-tut-row">
       <div class="card chat-box">
-        <div class="card-title"><span class="ic">?</span>?箄撖寡?</div>
+        <div class="card-title"><span class="ic">💬</span>智能对话</div>
         <div class="chat-msgs" id="chatMsgs">
-          <div class="msg ai">Hi~ ??拐耨?箄?拇???隡??嚗?霂?雿閬???嚗???亦?誘??</div>
+          <div class="msg ai">Hi~ 我是哩修智能助手。上传图片后，告诉我你想要的效果，或者直接点选滤镜卡片~</div>
         </div>
         <div class="chat-inp">
-          <input type="text" id="chatInput" placeholder="?膩????憒??亦頂皜??賜">
-          <button class="chat-send" onclick="sendChat()">??/button>
+          <input type="text" id="chatInput" placeholder="描述效果… 如：日系清新、冷白皮">
+          <button class="chat-send" onclick="sendChat()">发送</button>
         </div>
       </div>
       <div class="card tut-box">
-        <div class="card-title"><span class="ic">??</span>???芸郎</div>
+        <div class="card-title"><span class="ic">🔗</span>教程自学</div>
         <div class="tut-inp">
-          <input type="text" id="tutInput" placeholder="???暹嚗I?芸摮虫?">
-          <button class="tut-btn" onclick="learnTutorial()">?儭?摮虫?</button>
+          <input type="text" id="tutInput" placeholder="教程链接，AI自动学习">
+          <button class="tut-btn" onclick="learnTutorial()">🕷️ 学习</button>
         </div>
         <div class="learn-skills" id="learnSkills">
-          <div class="empty-s">蝎斐???暹撘憪郎銋耨?暹???/div>
+          <div class="empty-s">粘贴教程链接开始学习修图技能</div>
         </div>
       </div>
     </div>
 
     <!-- Progress -->
     <div class="card progress-section" id="progressSection">
-      <div class="card-title"><span class="ic">??/span>AI憭?銝?/div>
+      <div class="card-title"><span class="ic">⚡</span>AI处理中</div>
       <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
-      <div class="prog-txt" id="progText">甇????曄???/div>
+      <div class="prog-txt" id="progText">正在分析图片…</div>
       <div class="prog-log" id="progLog"></div>
     </div>
 
     <!-- Compare -->
     <div class="card compare-section" id="compareSection">
-      <div class="card-title"><span class="ic">??</span>??撖寞?</div>
+      <div class="card-title"><span class="ic">👀</span>前后对比</div>
       <div class="comp-grid">
         <div class="comp-box">
-          <h4>? 憭???/h4>
-          <div class="comp-img" id="beforeImg"><span class="ph">霂瑚?隡??/span></div>
+          <h4>📷 处理前</h4>
+          <div class="comp-img" id="beforeImg"><span class="ph">请上传图片</span></div>
         </div>
         <div class="comp-box">
-          <h4>??憭???/h4>
-          <div class="comp-img" id="afterImg"><span class="ph">?皛日???典???/span></div>
+          <h4>✨ 处理后</h4>
+          <div class="comp-img" id="afterImg"><span class="ph">选择滤镜后自动处理</span></div>
         </div>
       </div>
       <div class="act-row">
-        <button class="act-btn dl" onclick="dlResult()" id="dlBtn" disabled>? 銝蝸</button>
-        <button class="act-btn sh" onclick="shareResult()" id="shBtn" disabled>? ?澈</button>
-        <button class="act-btn rt" onclick="retryRandom()" id="rtBtn" disabled>? ?憌</button>
+        <button class="act-btn dl" onclick="dlResult()" id="dlBtn" disabled>💾 下载</button>
+        <button class="act-btn sh" onclick="shareResult()" id="shBtn" disabled>📤 分享</button>
+        <button class="act-btn rt" onclick="retryRandom()" id="rtBtn" disabled>🎲 随机风格</button>
       </div>
     </div>
   </div>
 
-  <!-- ===== Tab: 璅⊥?刻? ===== -->
+  <!-- ===== Tab: 模板推荐 ===== -->
   <div class="tab-content" id="tab-tpl">
     <div class="card">
-      <div class="card-title"><span class="ic">??</span>蝎暸芋?踵??/div>
+      <div class="card-title"><span class="ic">📋</span>精选模板推荐</div>
       <div class="filter-cats" style="margin-bottom:14px">
-        <button class="filter-cat active" data-tcat="all">?? ?券</button>
-        <button class="filter-cat" data-tcat="beauty">?? 蝢?</button>
-        <button class="filter-cat" data-tcat="filter">? 皛日?</button>
-        <button class="filter-cat" data-tcat="effect">???寞?</button>
-        <button class="filter-cat" data-tcat="style">? 憌</button>
-        <button class="filter-cat" data-tcat="vlog">? Vlog</button>
+        <button class="filter-cat active" data-tcat="all">🌈 全部</button>
+        <button class="filter-cat" data-tcat="beauty">💄 美颜</button>
+        <button class="filter-cat" data-tcat="filter">🎨 滤镜</button>
+        <button class="filter-cat" data-tcat="effect">✨ 特效</button>
+        <button class="filter-cat" data-tcat="style">🎭 风格</button>
+        <button class="filter-cat" data-tcat="vlog">🎬 Vlog</button>
       </div>
       <div class="tpl-grid" id="tplGrid"></div>
     </div>
   </div>
 
-  <!-- ===== Tab: 憭?霈啣? ===== -->
+  <!-- ===== Tab: 处理记录 ===== -->
   <div class="tab-content" id="tab-history">
     <div class="card">
-      <div class="card-title"><span class="ic">??</span>憭?霈啣?</div>
+      <div class="card-title"><span class="ic">📂</span>处理记录</div>
       <div class="hist-list" id="histList">
-        <div class="empty-s" id="histEmpty">餈瓷???扇敶??颱耨?曉~</div>
+        <div class="empty-s" id="histEmpty">还没有处理记录，去修图吧~</div>
       </div>
     </div>
   </div>
 </div>
 
-<button class="dev-fab" onclick="openDevLogin()" title="撘????>??</button>
+<button class="dev-fab" onclick="openDevLogin()" title="开发者后台">🔐</button>
 
 <script>
-/* ========== ?拐耨 v2.5 繚 ?典??賢恥?瑞垢 ========== */
+/* ========== 哩修 v2.5 · 全功能客户端 ========== */
 
-// ========== ?嗆?==========
+// ========== 状态 ==========
 var S = {
   file: null, fileUrl: null, selFilter: null,
   processedUrl: null, processing: false,
   learned: [], history: [], chat: []
 };
 
-// ========== 皛日??唳摨?30蝘??怠?蝡舐?憸?霈橘?==========
+// ========== 滤镜数据库（30种，含后端美颜预设）==========
 var filters = [
-  // --- 蝢? ---
-  {id:'natural',cat:'beauty',name:'?芰蝢?',icon:'?',desc:'?﹛蝤函蝢',stars:5},
-  {id:'premium',cat:'beauty',name:'蝎曇??,icon:'??',desc:'擃垢蝎曆耨',stars:5},
-  {id:'korean_glow',cat:'beauty',name:'?拍頂瘞游?',icon:'??,desc:'?拙?瘞游???,stars:4},
-  {id:'japanese_sweet',cat:'beauty',name:'?亦頂??',icon:'?',desc:'蝎???',stars:4},
-  {id:'warm_sun',cat:'beauty',name:'???,icon:'??',desc:'???亙熒??,stars:4},
-  {id:'pink_mist',cat:'beauty',name:'蝎',icon:'?儭?,desc:'蝎咿???,stars:3},
-  // --- 靚 ---
-  {id:'bright',cat:'tone',name:'?漁',icon:'?儭?,desc:'?港??漁',stars:3},
-  {id:'contrast',cat:'tone',name:'擃笆瘥?,icon:'??',desc:'撘箇?撖寞?',stars:3},
-  {id:'soft_glow',cat:'tone',name:'??',icon:'??',desc:'???西',stars:4},
-  {id:'natural_vivid',cat:'tone',name:'?芰斢',icon:'??',desc:'憓弗??,stars:4},
-  {id:'pastel',cat:'tone',name:'瘛∪蔗',icon:'?',desc:'雿弗??敶?,stars:3},
-  {id:'cream_skin',cat:'tone',name:'憟嗆硃??,icon:'?',desc:'憟嗆硃??',stars:4},
-  // --- ?嗥? ---
-  {id:'vintage',cat:'film',name:'憭?嗥?',icon:'??儭?,desc:'??憭',stars:5},
-  {id:'cinematic',cat:'film',name:'?萄蔣??,icon:'?',desc:'?萄蔣摰賢?靚?,stars:4},
-  {id:'retro_warm',cat:'film',name:'憭??',icon:'?',desc:'???',stars:3},
-  {id:'bw',cat:'film',name:'暺',icon:'??,desc:'蝏暺',stars:3},
-  {id:'japan_fresh',cat:'film',name:'?亦頂皜',icon:'?',desc:'擃漁??',stars:4},
-  {id:'sunset',cat:'film',name:'?亥??,icon:'??',desc:'璈滯瘞',stars:4},
-  // --- ?? ---
-  {id:'cyberpunk',cat:'style',name:'韏???',icon:'??',desc:'蝝怨??',stars:4},
-  {id:'invert',cat:'style',name:'?蓮??,icon:'??',desc:'?脣蔗?蓮',stars:3},
-  {id:'sketch',cat:'style',name:'蝝?',icon:'??',desc:'??蝝?',stars:4},
-  {id:'blue_tone',cat:'style',name:'??',icon:'?',desc:'?瑁?敹折?',stars:3},
-  {id:'dark_mood',cat:'style',name:'??',icon:'??',desc:'雿???',stars:3},
-  {id:'anime',cat:'style',name:'?冽憤憌?,icon:'?',desc:'?⊿靚?,stars:4},
-  // --- ?亦頂銝掩 ---
-  {id:'japan_soft',cat:'japanese',name:'??亦頂',icon:'?儭?,desc:'??餈?',stars:4},
-  {id:'japan_milk',cat:'japanese',name:'?扒??,icon:'??',desc:'憟嗥?漁',stars:4},
-  // --- ?拍頂銝掩 ---
-  {id:'korea_cool',cat:'korean',name:'?瑞??,icon:'??',desc:'???瑞',stars:5},
-  {id:'korea_glass',cat:'korean',name:'?餌???,icon:'??',desc:'????,stars:4}
+  // --- 美颜 ---
+  {id:'natural',cat:'beauty',name:'自然美颜',icon:'🌸',desc:'均衡磨皮美白',stars:5},
+  {id:'premium',cat:'beauty',name:'精致感',icon:'💎',desc:'高端精修',stars:5},
+  {id:'korean_glow',cat:'beauty',name:'韩系水光',icon:'✨',desc:'韩式水光肌',stars:4},
+  {id:'japanese_sweet',cat:'beauty',name:'日系甜美',icon:'🍡',desc:'粉甜减龄',stars:4},
+  {id:'warm_sun',cat:'beauty',name:'暖阳肌',icon:'🌞',desc:'暖调健康肌',stars:4},
+  {id:'pink_mist',cat:'beauty',name:'粉雾',icon:'🌫️',desc:'粉嫩柔雾感',stars:3},
+  // --- 调色 ---
+  {id:'bright',cat:'tone',name:'提亮',icon:'☀️',desc:'整体提亮',stars:3},
+  {id:'contrast',cat:'tone',name:'高对比',icon:'📈',desc:'强烈对比',stars:3},
+  {id:'soft_glow',cat:'tone',name:'柔光',icon:'🌙',desc:'柔和朦胧',stars:4},
+  {id:'natural_vivid',cat:'tone',name:'自然鲜艳',icon:'🌈',desc:'增饱和',stars:4},
+  {id:'pastel',cat:'tone',name:'淡彩',icon:'🎨',desc:'低饱和柔彩',stars:3},
+  {id:'cream_skin',cat:'tone',name:'奶油肌',icon:'🍦',desc:'奶油柔调',stars:4},
+  // --- 胶片 ---
+  {id:'vintage',cat:'film',name:'复古胶片',icon:'🎞️',desc:'暖黄复古',stars:5},
+  {id:'cinematic',cat:'film',name:'电影感',icon:'🎬',desc:'电影宽幅调',stars:4},
+  {id:'retro_warm',cat:'film',name:'复古暖黄',icon:'🟡',desc:'老照片暖',stars:3},
+  {id:'bw',cat:'film',name:'黑白',icon:'⚫',desc:'经典黑白',stars:3},
+  {id:'japan_fresh',cat:'film',name:'日系清新',icon:'🌸',desc:'高亮青调',stars:4},
+  {id:'sunset',cat:'film',name:'日落暖',icon:'🌅',desc:'橙红氛围',stars:4},
+  // --- 创意 ---
+  {id:'cyberpunk',cat:'style',name:'赛博朋克',icon:'🌃',desc:'紫蓝霓虹',stars:4},
+  {id:'invert',cat:'style',name:'反转色',icon:'🔄',desc:'色彩反转',stars:3},
+  {id:'sketch',cat:'style',name:'素描',icon:'✏️',desc:'铅笔素描',stars:4},
+  {id:'blue_tone',cat:'style',name:'蓝调',icon:'💧',desc:'冷蓝忧郁',stars:3},
+  {id:'dark_mood',cat:'style',name:'暗黑',icon:'🌙',desc:'低调暗沉',stars:3},
+  {id:'anime',cat:'style',name:'动漫风',icon:'🌸',desc:'卡通色调',stars:4},
+  // --- 日系专类 ---
+  {id:'japan_soft',cat:'japanese',name:'柔焦日系',icon:'🌤️',desc:'柔和过曝',stars:4},
+  {id:'japan_milk',cat:'japanese',name:'牛奶肌',icon:'🥛',desc:'奶白透亮',stars:4},
+  // --- 韩系专类 ---
+  {id:'korea_cool',cat:'korean',name:'冷白皮',icon:'❄️',desc:'蓝调冷白',stars:5},
+  {id:'korea_glass',cat:'korean',name:'玻璃肌',icon:'🪟',desc:'通透发光',stars:4}
 ];
 
 document.getElementById('fCount').textContent = filters.length;
 
-// ========== 皛日?撘?嚗anvas 2D ??蝝?==========
+// ========== 滤镜引擎（Canvas 2D 逐像素）==========
 var FE = {
   apply: function(d, id) {
     var l=d.length,i;
     switch(id) {
-      // 蝢?蝟?      case 'natural':
+      // 美颜系
+      case 'natural':
         for(i=0;i<l;i+=4){
           var a=(d[i]+d[i+1]+d[i+2])/3;
           d[i]=M(255,M(0,a+(d[i]-a)*1.2+3));
@@ -596,7 +597,7 @@ var FE = {
           d[i]=M(255,d[i]*1.04+14);d[i+1]=M(255,d[i+1]*0.95+6);
           d[i+2]=M(255,d[i+2]*0.93+8);
         } break;
-      // 靚
+      // 调色
       case 'bright':for(i=0;i<l;i+=4){d[i]=M(255,d[i]+22);d[i+1]=M(255,d[i+1]+22);d[i+2]=M(255,d[i+2]+22);}break;
       case 'contrast':for(i=0;i<l;i+=4){d[i]=M(255,M(0,(d[i]-128)*1.5+128));d[i+1]=M(255,M(0,(d[i+1]-128)*1.5+128));d[i+2]=M(255,M(0,(d[i+2]-128)*1.5+128));}break;
       case 'soft_glow':for(i=0;i<l;i+=4){d[i]=M(255,(d[i]+255)*0.6);d[i+1]=M(255,(d[i+1]+255)*0.6);d[i+2]=M(255,(d[i+2]+255)*0.6);}break;
@@ -607,24 +608,24 @@ var FE = {
           var gc=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];
           d[i]=M(255,gc*1.1+12);d[i+1]=M(255,gc*1.05+6);d[i+2]=M(255,gc*0.9+4);
         } break;
-      // ?嗥?
+      // 胶片
       case 'vintage':for(i=0;i<l;i+=4){var sv=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];d[i]=M(255,sv*0.95+25);d[i+1]=M(255,sv*0.88+15);d[i+2]=M(255,sv*0.72+5);}break;
       case 'cinematic':for(i=0;i<l;i+=4){var sc=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];d[i]=M(255,M(0,(d[i]-128)*1.3+130));d[i+1]=M(255,M(0,(d[i+1]-128)*1.3+128));d[i+2]=M(255,M(0,(d[i+2]-128)*1.3+124));}break;
       case 'retro_warm':for(i=0;i<l;i+=4){var sr=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];d[i]=M(255,sr*1.1+20);d[i+1]=M(255,sr*0.95+10);d[i+2]=M(255,sr*0.75);}break;
       case 'bw':for(i=0;i<l;i+=4){var g=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];d[i]=d[i+1]=d[i+2]=Math.round(g);}break;
       case 'japan_fresh':for(i=0;i<l;i+=4){d[i]=M(255,d[i]*1.05+15);d[i+1]=M(255,d[i+1]*1.03+10);d[i+2]=M(255,d[i+2]*1.08+18);}break;
       case 'sunset':for(i=0;i<l;i+=4){d[i]=M(255,d[i]*1.15+20);d[i+1]=M(255,d[i+1]*0.95+8);d[i+2]=M(255,d[i+2]*0.78);}break;
-      // ??
+      // 创意
       case 'cyberpunk':for(i=0;i<l;i+=4){var gc=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];d[i]=M(255,M(0,(d[i]-128)*1.4+155));d[i+2]=M(255,M(0,(d[i+2]-128)*1.6+145));d[i+1]=M(255,M(0,(d[i+1]-128)*1.1+100));d[i]=M(255,d[i]+15);d[i+2]=M(255,d[i+2]+25);}break;
       case 'invert':for(i=0;i<l;i+=4){d[i]=255-d[i];d[i+1]=255-d[i+1];d[i+2]=255-d[i+2];}break;
       case 'sketch':for(i=0;i<l;i+=4){var g=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];d[i]=d[i+1]=d[i+2]=M(255,M(0,255-g*1.2+30));}break;
       case 'blue_tone':for(i=0;i<l;i+=4){d[i]=M(255,d[i]*0.88);d[i+1]=M(255,d[i+1]*0.92);d[i+2]=M(255,d[i+2]*1.15+20);}break;
       case 'dark_mood':for(i=0;i<l;i+=4){d[i]=M(255,d[i]*0.7);d[i+1]=M(255,d[i+1]*0.68);d[i+2]=M(255,d[i+2]*0.75);}break;
       case 'anime':for(i=0;i<l;i+=4){var ga=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];d[i]=M(255,M(0,ga+(d[i]-ga)*1.8+15));d[i+1]=M(255,M(0,ga+(d[i+1]-ga)*1.8+12));d[i+2]=M(255,M(0,ga+(d[i+2]-ga)*1.8+20));}break;
-      // ?亦頂銝掩
+      // 日系专类
       case 'japan_soft':for(i=0;i<l;i+=4){d[i]=M(255,d[i]*1.12+20);d[i+1]=M(255,d[i+1]*1.08+15);d[i+2]=M(255,d[i+2]*1.10+18);}break;
       case 'japan_milk':for(i=0;i<l;i+=4){d[i]=M(255,d[i]*1.10+18);d[i+1]=M(255,d[i+1]*1.12+20);d[i+2]=M(255,d[i+2]*1.10+15);}break;
-      // ?拍頂銝掩
+      // 韩系专类
       case 'korea_cool':for(i=0;i<l;i+=4){d[i]=M(255,d[i]*0.92+5);d[i+1]=M(255,d[i+1]*0.95+8);d[i+2]=M(255,d[i+2]*1.10+20);}break;
       case 'korea_glass':for(i=0;i<l;i+=4){var a=(d[i]+d[i+1]+d[i+2])/3;d[i]=M(255,a+(d[i]-a)*0.8+20);d[i+1]=M(255,a+(d[i+1]-a)*0.8+18);d[i+2]=M(255,a+(d[i+2]-a)*0.8+22);}break;
     }
@@ -648,29 +649,29 @@ var FE = {
 };
 var M=Math.min;
 
-// ========== 璅⊥?刻??唳 ==========
+// ========== 模板推荐数据 ==========
 var templates = [
-  {id:'t1',cat:'beauty',name:'?芰蝢?',icon:'?',desc:'?亙虜?芰靽桀',badge:'beauty'},
-  {id:'t2',cat:'beauty',name:'?拍頂瘞游?',icon:'??,desc:'?拙?????,badge:'beauty'},
-  {id:'t3',cat:'beauty',name:'?亦頂??',icon:'?',desc:'蝎咿??憒?,badge:'beauty'},
-  {id:'t4',cat:'beauty',name:'蝎曇憒?',icon:'??',desc:'擃?靽桀',badge:'beauty'},
-  {id:'t5',cat:'filter',name:'憟嗆硃??,icon:'?',desc:'憟嗆硃??',badge:'filter'},
-  {id:'t6',cat:'filter',name:'蝎皛日?',icon:'?儭?,desc:'??蝎?',badge:'filter'},
-  {id:'t7',cat:'filter',name:'?亥??',icon:'??',desc:'皜拇?璈?',badge:'filter'},
-  {id:'t8',cat:'filter',name:'?瑞??,icon:'??',desc:'皜??,badge:'filter'},
-  {id:'t9',cat:'effect',name:'?嗥?韐冽?',icon:'??儭?,desc:'憭?嗥?',badge:'effect'},
-  {id:'t10',cat:'effect',name:'?萄蔣??,icon:'?',desc:'摰賢??萄蔣',badge:'effect'},
-  {id:'t11',cat:'effect',name:'蝝?憌',icon:'??',desc:'??蝝?',badge:'effect'},
-  {id:'t12',cat:'effect',name:'?冽憤憌?,icon:'?',desc:'?⊿?',badge:'effect'},
-  {id:'t13',cat:'style',name:'韏???',icon:'??',desc:'蝝怨??',badge:'style'},
-  {id:'t14',cat:'style',name:'??敹折?',icon:'?',desc:'?瑁?靚?,badge:'style'},
-  {id:'t15',cat:'style',name:'暺蝏',icon:'??,desc:'暺',badge:'style'},
-  {id:'t16',cat:'style',name:'??憌?,icon:'??',desc:'雿???',badge:'style'},
-  {id:'t17',cat:'vlog',name:'Vlog撠',icon:'?',desc:'?剛?憸??Ｖ???,badge:'vlog'},
-  {id:'t18',cat:'vlog',name:'蝢?靚',icon:'??',desc:'憌?脤???,badge:'vlog'}
+  {id:'t1',cat:'beauty',name:'自然美颜',icon:'🌸',desc:'日常自然修图',badge:'beauty'},
+  {id:'t2',cat:'beauty',name:'韩系水光',icon:'✨',desc:'韩式发光肌',badge:'beauty'},
+  {id:'t3',cat:'beauty',name:'日系甜美',icon:'🍡',desc:'粉嫩减龄妆',badge:'beauty'},
+  {id:'t4',cat:'beauty',name:'精致妆感',icon:'💎',desc:'高定修图',badge:'beauty'},
+  {id:'t5',cat:'filter',name:'奶油肌',icon:'🍦',desc:'奶油柔调',badge:'filter'},
+  {id:'t6',cat:'filter',name:'粉雾滤镜',icon:'🌫️',desc:'柔和粉调',badge:'filter'},
+  {id:'t7',cat:'filter',name:'日落暖调',icon:'🌅',desc:'温暖橙调',badge:'filter'},
+  {id:'t8',cat:'filter',name:'冷白皮',icon:'❄️',desc:'清透冷白',badge:'filter'},
+  {id:'t9',cat:'effect',name:'胶片质感',icon:'🎞️',desc:'复古胶片',badge:'effect'},
+  {id:'t10',cat:'effect',name:'电影感',icon:'🎬',desc:'宽幅电影',badge:'effect'},
+  {id:'t11',cat:'effect',name:'素描风格',icon:'✏️',desc:'铅笔素描',badge:'effect'},
+  {id:'t12',cat:'effect',name:'动漫风',icon:'🌸',desc:'卡通调',badge:'effect'},
+  {id:'t13',cat:'style',name:'赛博朋克',icon:'🌃',desc:'紫蓝霓虹',badge:'style'},
+  {id:'t14',cat:'style',name:'蓝调忧郁',icon:'💧',desc:'冷蓝调',badge:'style'},
+  {id:'t15',cat:'style',name:'黑白经典',icon:'⚫',desc:'黑白',badge:'style'},
+  {id:'t16',cat:'style',name:'暗黑风',icon:'🌙',desc:'低调暗沉',badge:'style'},
+  {id:'t17',cat:'vlog',name:'Vlog封面',icon:'🎬',desc:'短视频封面优化',badge:'vlog'},
+  {id:'t18',cat:'vlog',name:'美食调色',icon:'🍜',desc:'食物色香味',badge:'vlog'}
 ];
 
-// ========== 皜脫? ==========
+// ========== 渲染 ==========
 function renderFilters(cat) {
   var g=document.getElementById('filterGrid');
   var s = filters.filter(function(f){
@@ -679,12 +680,12 @@ function renderFilters(cat) {
     return f.cat===cat;
   });
   if(cat==='learned' && s.length===0){
-    g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:24px;color:var(--text-muted);font-size:13px;">?? 餈瓷摮血??踝?蝎斐???暹撘憪郎銋?/div>';
+    g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:24px;color:var(--text-muted);font-size:13px;">🧠 还没学到技能，粘贴教程链接开始学习</div>';
     return;
   }
   g.innerHTML=s.map(function(f){
     var a=S.selFilter===f.id?' active':'';
-    var st=Array(f.stars).fill('??).join('')+Array(5-f.stars).fill('??).join('');
+    var st=Array(f.stars).fill('★').join('')+Array(5-f.stars).fill('☆').join('');
     return '<div class="fc'+a+'" onclick="selectFilter(\''+f.id+'\')">'+
       '<div class="fi">'+f.icon+'</div>'+
       '<div class="fn">'+f.name+'</div>'+
@@ -705,22 +706,22 @@ function renderTemplates(cat) {
   }).join('');
 }
 
-// ========== ?皛日? ==========
+// ========== 选择滤镜 ==========
 function selectFilter(id) {
   S.selFilter=id;
   document.querySelectorAll('.fc').forEach(function(c){c.classList.remove('active');});
   var el=document.querySelector('.fc[onclick*="'+id+'"]');
   if(el)el.classList.add('active');
   var f=filters.find(function(x){return x.id===id;});
-  if(f) addMsg('ai','撌脤?+f.icon+' '+f.name+'???潘?');
+  if(f) addMsg('ai','已选「'+f.icon+' '+f.name+'」风格！');
   if(S.file) startProc();
 }
 
-// ========== 摨璅⊥ ==========
+// ========== 应用模板 ==========
 function applyTemplate(tid) {
   var t=templates.find(function(x){return x.id===tid;});
   if(!t)return;
-  // ?曉??皛日?
+  // 找匹配的滤镜
   var candidates=filters.filter(function(f){
     return f.name.indexOf(t.name)!==-1||f.desc.indexOf(t.desc)!==-1||f.cat===t.cat;
   });
@@ -729,14 +730,14 @@ function applyTemplate(tid) {
     renderFilters(document.querySelector('.filter-cat.active')?.dataset?.cat||'all');
     var el=document.querySelector('.fc[onclick*="'+candidates[0].id+'"]');
     if(el)el.classList.add('active');
-    addMsg('ai','?? 撌脣??冽芋?踴?+t.icon+' '+t.name+'??);
-    // ?靽桀tab
+    addMsg('ai','📋 已应用模板「'+t.icon+' '+t.name+'」');
+    // 切到修图tab
     switchTab('tab-edit');
     if(S.file) startProc();
   }
 }
 
-// ========== ??掩?倌 ==========
+// ========== 切换分类标签 ==========
 document.getElementById('filterCats').addEventListener('click',function(e){
   var b=e.target.closest('.filter-cat');
   if(!b)return;
@@ -745,7 +746,7 @@ document.getElementById('filterCats').addEventListener('click',function(e){
   renderFilters(b.dataset.cat);
 });
 
-// 璅⊥?掩
+// 模板分类
 document.addEventListener('click',function(e){
   var b=e.target.closest('[data-tcat]');
   if(!b||!e.target.closest('#tab-tpl'))return;
@@ -754,7 +755,7 @@ document.addEventListener('click',function(e){
   renderTemplates(b.dataset.tcat);
 });
 
-// ========== 銝蓉AB? ==========
+// ========== 主TAB切换 ==========
 document.querySelector('.main-tabs').addEventListener('click',function(e){
   var b=e.target.closest('.main-tab');
   if(!b)return;
@@ -769,7 +770,7 @@ function switchTab(id){
   if(tc)tc.classList.add('active');
 }
 
-// ========== ?辣銝? ==========
+// ========== 文件上传 ==========
 var uz=document.getElementById('uploadZone');
 var fi=document.getElementById('fileInput');
 uz.addEventListener('click',function(){fi.click();});
@@ -785,23 +786,23 @@ fi.addEventListener('change',function(e){
 
 function handleFile(f){
   var ok=['image/jpeg','image/png','image/webp','image/jpg'];
-  if(ok.indexOf(f.type)===-1){toast('霂瑚?隡?撘?,'err');return;}
-  if(f.size>50*1024*1024){toast('?曄?銝頞?50MB','err');return;}
+  if(ok.indexOf(f.type)===-1){toast('请上传图片格式','err');return;}
+  if(f.size>50*1024*1024){toast('图片不能超过50MB','err');return;}
   S.file=f;
   var r=new FileReader();
   r.onload=function(e){
     S.fileUrl=e.target.result;
     document.getElementById('beforeImg').innerHTML='<img src="'+e.target.result+'">';
-    document.getElementById('afterImg').innerHTML='<span class="ph">?皛日???典???/span>';
+    document.getElementById('afterImg').innerHTML='<span class="ph">选择滤镜后自动处理</span>';
     document.getElementById('dlBtn').disabled=true;
     document.getElementById('shBtn').disabled=true;
     document.getElementById('rtBtn').disabled=true;
-    toast('銝???嚗窈?誘??,'ok');
+    toast('上传成功！请选滤镜','ok');
     if(S.selFilter)startProc();
   };r.readAsDataURL(f);
 }
 
-// ========== 憭?撘? ==========
+// ========== 处理引擎 ==========
 function startProc(){
   if(S.processing||!S.fileUrl||!S.selFilter)return;
   S.processing=true;
@@ -810,15 +811,15 @@ function startProc(){
   document.getElementById('compareSection').style.display='none';
   document.getElementById('progFill').style.width='0%';
   document.getElementById('progLog').innerHTML='';
-  document.getElementById('progText').textContent='甇????曄????;
+  document.getElementById('progText').textContent='正在分析图片参数…';
 
   var f=filters.find(function(x){return x.id===S.selFilter;});
   var steps=[
-    {t:'? 霂餃????,p:12,d:300},
-    {t:'? ???脣蔗????,p:28,d:400},
-    {t:'??摨??+f.name+'???潑?,p:52,d:600},
-    {t:'?? ??蝝?????,p:78,d:500},
-    {t:'??憭?摰?嚗?,p:100,d:300}
+    {t:'📷 读取原图…',p:12,d:300},
+    {t:'🎨 分析色彩分布…',p:28,d:400},
+    {t:'✨ 应用「'+f.name+'」风格…',p:52,d:600},
+    {t:'🔍 逐像素优化细节…',p:78,d:500},
+    {t:'✅ 处理完成！',p:100,d:300}
   ];
   runSteps(steps,0,function(){
     FE.process(S.fileUrl,S.selFilter).then(function(r){
@@ -830,10 +831,10 @@ function startProc(){
       document.getElementById('shBtn').disabled=false;
       document.getElementById('rtBtn').disabled=false;
       S.processing=false;
-      // 霈啣??
-      S.history.unshift({filter:f?f.name:'?芰',icon:f?f.icon:'?',time:new Date().toLocaleString(),url:S.processedUrl});
+      // 记录历史
+      S.history.unshift({filter:f?f.name:'未知',icon:f?f.icon:'🎨',time:new Date().toLocaleString(),url:S.processedUrl});
       renderHistory();
-      toast('??憭?摰?嚗?????,'ok');
+      toast('✅ 处理完成！看看效果','ok');
     });
   });
 }
@@ -855,18 +856,18 @@ function addLog(t,type){
   l.appendChild(e);l.scrollTop=l.scrollHeight;
 }
 
-// ========== 銝蝸 / ?澈 / ? ==========
+// ========== 下载 / 分享 / 随机 ==========
 function dlResult(){
-  if(!S.processedUrl){toast('餈瓷????,'err');return;}
+  if(!S.processedUrl){toast('还没有结果','err');return;}
   var a=document.createElement('a');
-  a.download='?拐耨_'+S.selFilter+'_'+Date.now()+'.jpg';
+  a.download='哩修_'+S.selFilter+'_'+Date.now()+'.jpg';
   a.href=S.processedUrl;a.click();
-  toast('銝蝸??嚗?,'ok');
+  toast('下载成功！','ok');
 }
 
 function shareResult(){
-  if(!S.processedUrl){toast('餈瓷????,'err');return;}
-  if(navigator.share){navigator.share({title:'?拐耨AI靽桀',text:'?典靽唧I憭????'});}else{
+  if(!S.processedUrl){toast('还没有结果','err');return;}
+  if(navigator.share){navigator.share({title:'哩修AI修图',text:'用哩修AI处理的效果✨'});}else{
     var c=document.createElement('canvas');
     var img=new Image();
     img.onload=function(){
@@ -874,8 +875,8 @@ function shareResult(){
       c.getContext('2d').drawImage(img,0,0);
       c.toBlob(function(blob){
         navigator.clipboard.write([new ClipboardItem({'image/png':blob})])
-          .then(function(){toast('撌脣??嗅?芾斐??','ok');})
-          .catch(function(){toast('憭憭梯揖嚗銝蝸?','err');});
+          .then(function(){toast('已复制到剪贴板!','ok');})
+          .catch(function(){toast('复制失败，用下载功能','err');});
       });
     };img.src=S.processedUrl;
   }
@@ -890,44 +891,44 @@ function retryRandom(){
   var el=document.querySelector('.fc[onclick*="'+pick+'"]');
   if(el)el.classList.add('active');
   var f=filters.find(function(x){return x.id===pick;});
-  addMsg('ai','? ???喋?+f.icon+' '+f.name+'??);
+  addMsg('ai','🎲 随机切换至「'+f.icon+' '+f.name+'」');
   startProc();
 }
 
-// ========== ?予 ==========
+// ========== 聊天 ==========
 var cr = {
-  '?瑞':'?瑞?格???撣桐??葉?蝟餃?賬?儭?,
-  '??:'?唾??踝?霂??蝟餃?賜????憟嗉???,
-  '蝢?':'?芰蝢?摰?嚗??,
-  '蝎曆耨':'蝎曇?移靽格芋撘??,
-  '?芰':'?芰蝢?璅∪??',
-  '?亦頂':'?亦頂憌嚗葉?蝟餌?蝢??蝟餅??啜??,
-  '?拍頂':'?拍頂憌?乩?嚗葉?蝟餅偌?',
-  '瘞游?':'?拍頂瘞游????',
-  '憭':'憭?嗥????',
-  '?嗥?':'?嗥?憌嚗??方???萄蔣???,
-  '蝎?:'蝎咿??嚗??整??蝟餌?蝢??,
-  '??:'??憌嚗葉?蝟餌?蝢??,
-  '??':'?????蝟餅偌?',
-  '?冽憤':'?冽憤憌????,
-  '暺':'暺蝏??,
-  '??:'??憌??',
-  '??:'??敹折??',
-  '斢':'?芰斢??',
-  '瘛?:'瘛∪蔗???',
-  '撖寞?':'擃笆瘥漲??',
-  '鈭?:'?漁???儭?,
-  '韏?':'韏?????',
-  '?蓮':'?蓮?莞??,
-  '蝝?':'蝝?憌??',
-  '?亥':'?亥???',
-  '?萄蔣':'?萄蔣???,
-  '憟嗆硃':'憟嗆硃???,
-  '?餌?':'?餌?????',
-  'Vlog':'Vlog璅⊥?刻?嚗??璅⊥憿萄?',
-  '璅⊥':'?餅芋?踵?△???攻??,
-  'help':'雿輻??: 1儭銝??曄? 2儭?誘??3儭霂湧?瘙?4儭韐湔?蝔?亥摮?,
-  '暺恕':'Hi~ 霂渲秩雿閬???: ?瑞?柴蝟颯蝟颯??扎瞍徉行??湔?寞誘???'
+  '冷白':'冷白皮效果！帮你选中「韩系冷白」❄️',
+  '白':'想要白？试试「韩系冷白皮」或「牛奶肌」🥛',
+  '美颜':'自然美颜安排！🌸',
+  '精修':'精致感精修模式💎',
+  '自然':'自然美颜模式🌸',
+  '日系':'日系风格！选中「日系甜美」或「日系清新」🌸',
+  '韩系':'韩系风格来了！选中「韩系水光」✨',
+  '水光':'韩系水光肌安排✨',
+  '复古':'复古胶片感🎞️',
+  '胶片':'胶片风格！复古胶片或电影感🎬',
+  '粉':'粉嫩效果！「粉雾」或「日系甜美」🍬',
+  '甜':'甜美风格，选中「日系甜美」🍡',
+  '发光':'发光肌！「韩系水光」✨',
+  '动漫':'动漫风安排🌸',
+  '黑白':'黑白经典⚫',
+  '暗':'暗黑风格🌙',
+  '蓝':'蓝调忧郁💧',
+  '鲜艳':'自然鲜艳🌈',
+  '淡':'淡彩柔和🎨',
+  '对比':'高对比度📈',
+  '亮':'提亮效果☀️',
+  '赛博':'赛博朋克🌃',
+  '反转':'反转色🔄',
+  '素描':'素描风格✏️',
+  '日落':'日落暖色🌅',
+  '电影':'电影感🎬',
+  '奶油':'奶油肌🍦',
+  '玻璃':'玻璃通透肌🪟',
+  'Vlog':'Vlog模板推荐，去看看模板页吧🎬',
+  '模板':'去模板推荐页看看吧📋',
+  'help':'使用指南: 1️⃣上传图片 2️⃣选滤镜 3️⃣说需求 4️⃣贴教程链接自学',
+  '默认':'Hi~ 说说你想要的效果: 冷白皮、日系、韩系、复古、动漫…或直接点滤镜卡片！'
 };
 
 function sendChat(){
@@ -954,7 +955,7 @@ function sendChat(){
     }
   }
   if(!matched){
-    setTimeout(function(){addMsg('ai','霂?霂? ?瑞?柴蝟颯??扎瞍怒????行??寞誘????);},400);
+    setTimeout(function(){addMsg('ai','试试说: 冷白皮、日系、复古、动漫、赛博朋克…或点滤镜卡片🎨');},400);
   }
 }
 
@@ -970,14 +971,14 @@ document.getElementById('chatInput').addEventListener('keydown',function(e){
   if(e.key==='Enter')sendChat();
 });
 
-// ========== ???芸郎 ==========
+// ========== 教程自学 ==========
 function learnTutorial(){
   var inp=document.getElementById('tutInput');
   var url=inp.value.trim();
-  if(!url){toast('颲???暹','err');return;}
+  if(!url){toast('输入教程链接','err');return;}
   inp.value='';
-  addMsg('ai','?? 甇?摮虫?: '+url);
-  var msgs=['?? 霈輸憿菟??,'? 銝蝸????,'?? AI??靽桀甇仿炊??,'?? ??????,'??摮虫?摰?嚗?];
+  addMsg('ai','📖 正在学习: '+url);
+  var msgs=['🔍 访问页面…','📥 下载教程…','🧠 AI分析修图步骤…','📝 提取效果…','✅ 学习完成！'];
   var idx=0;
   var iv=setInterval(function(){
     if(idx<msgs.length){
@@ -986,13 +987,13 @@ function learnTutorial(){
       clearInterval(iv);
       var unlearned=filters.filter(function(f){return S.learned.indexOf(f.id)===-1;});
       if(unlearned.length===0){
-        addMsg('ai','?? ?券皛日?撌脣郎摰?');toast('?券摮血?嚗?,'ok');return;
+        addMsg('ai','🎉 全部滤镜已学完！');toast('全部学完！','ok');return;
       }
       var picked=unlearned[Math.floor(Math.random()*unlearned.length)];
       S.learned.push(picked.id);
       renderLearned();
-      addMsg('ai','?? 摮虫??唳??賬?+picked.icon+' '+picked.name+'??);
-      toast('?? 摮虫???+picked.name+'??,'ok');
+      addMsg('ai','🎉 学会新技能「'+picked.icon+' '+picked.name+'」');
+      toast('🧠 学会「'+picked.name+'」','ok');
     }
   },700);
 }
@@ -1000,19 +1001,19 @@ function learnTutorial(){
 function renderLearned(){
   var c=document.getElementById('learnSkills');
   if(S.learned.length===0){
-    c.innerHTML='<div class="empty-s">蝎斐???暹撘憪郎銋耨?暹???/div>';return;
+    c.innerHTML='<div class="empty-s">粘贴教程链接开始学习修图技能</div>';return;
   }
   c.innerHTML=S.learned.map(function(id){
     var f=filters.find(function(x){return x.id===id;});
-    return '<div class="ls"><span>'+(f?f.icon:'??')+' '+(f?f.name:id)+'</span><span class="lb">撌脣郎</span></div>';
+    return '<div class="ls"><span>'+(f?f.icon:'🧠')+' '+(f?f.name:id)+'</span><span class="lb">已学</span></div>';
   }).join('');
 }
 
-// ========== ?霈啣? ==========
+// ========== 历史记录 ==========
 function renderHistory(){
   var c=document.getElementById('histList');
   if(S.history.length===0){
-    c.innerHTML='<div class="empty-s">餈瓷???扇敶??颱耨?曉~</div>';return;
+    c.innerHTML='<div class="empty-s">还没有处理记录，去修图吧~</div>';return;
   }
   c.innerHTML=S.history.map(function(h,i){
     return '<div class="hist-item" onclick="restoreFromHistory('+i+')">'+
@@ -1023,21 +1024,21 @@ function renderHistory(){
 
 function restoreFromHistory(i){
   var h=S.history[i];
-  toast('撌脫???? '+h.filter,'inf');
+  toast('已查看历史: '+h.filter,'inf');
 }
 
-// ========== 撘?恕霂?==========
+// ========== 开发者认证 ==========
 var DA={u:'lixiu-ohye',p:'myy123456',a:false,login:function(u,p){if(u===this.u&&p===this.p){this.a=true;return true;}return false;},logout:function(){this.a=false;}};
 
 function openDevLogin(){
   var m=document.createElement('div');
   m.className='modal-overlay';
   m.onclick=function(e){if(e.target===this)m.remove();};
-  m.innerHTML='<div class="modal-box"><h2>?? 撘????/h2><p class="ml">霂瑁??亥揭?瑕???/p>'+
-    '<input type="text" class="modal-inp" id="devUser" placeholder="撘?揭?? autofocus>'+
-    '<input type="password" class="modal-inp" id="devPass" placeholder="撘????>'+
-    '<button class="modal-btn pri" onclick="authDev()">?餃?</button>'+
-    '<button class="modal-btn sec" onclick="this.closest(\'.modal-overlay\').remove()">??</button></div>';
+  m.innerHTML='<div class="modal-box"><h2>🔐 开发者后台</h2><p class="ml">请输入账号密码</p>'+
+    '<input type="text" class="modal-inp" id="devUser" placeholder="开发者账号" autofocus>'+
+    '<input type="password" class="modal-inp" id="devPass" placeholder="开发者密码">'+
+    '<button class="modal-btn pri" onclick="authDev()">登录</button>'+
+    '<button class="modal-btn sec" onclick="this.closest(\'.modal-overlay\').remove()">取消</button></div>';
   document.body.appendChild(m);
   setTimeout(function(){
     var u=document.getElementById('devUser'),p=document.getElementById('devPass');
@@ -1050,12 +1051,12 @@ function openDevLogin(){
 function authDev(){
   var u=document.getElementById('devUser').value.trim();
   var p=document.getElementById('devPass').value.trim();
-  if(!u||!p){toast('霂瑁??亥揭?瑕?撖?','err');return;}
+  if(!u||!p){toast('请输入账号和密码','err');return;}
   if(DA.login(u,p)){
     document.querySelectorAll('.modal-overlay').forEach(function(m){m.remove();});
-    toast('?餃???嚗?,'ok');
+    toast('登录成功！','ok');
     showDash();
-  }else{toast('韐血????霂?,'err');}
+  }else{toast('账号或密码错误','err');}
 }
 
 function showDash(){
@@ -1064,18 +1065,18 @@ function showDash(){
   m.onclick=function(e){if(e.target===this)m.remove();};
   var now=new Date().toLocaleString();
   m.innerHTML='<div class="modal-box"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">'+
-    '<h2 style="margin:0;font-size:17px;">?? 撘????/h2>'+
-    '<button onclick="closeDash()" style="padding:5px 12px;background:rgba(200,160,140,0.08);border:none;border-radius:8px;cursor:pointer;font-size:12px;">???/button></div>'+
-    '<p style="font-size:12px;color:var(--text-muted);margin-bottom:14px;">撘?? <strong>lixiu-ohye</strong></p>'+
+    '<h2 style="margin:0;font-size:17px;">🔐 开发者后台</h2>'+
+    '<button onclick="closeDash()" style="padding:5px 12px;background:rgba(200,160,140,0.08);border:none;border-radius:8px;cursor:pointer;font-size:12px;">退出</button></div>'+
+    '<p style="font-size:12px;color:var(--text-muted);margin-bottom:14px;">开发者: <strong>lixiu-ohye</strong></p>'+
     '<div class="dash-g">'+
-    '<div class="dash-i"><span>?祈撘?</span><span class="st on">??餈?銝?/span></div>'+
-    '<div class="dash-i"><span>AI摮虫???/span><span class="st on">??餈?銝?/span></div>'+
-    '<div class="dash-i"><span>皛日?撘?</span><span class="st on">??Canvas 2D</span></div>'+
-    '<div class="dash-i"><span>銝活?湔</span><span style="font-weight:600;color:var(--rose-dark)">'+now+'</span></div>'+
+    '<div class="dash-i"><span>爬虫引擎</span><span class="st on">● 运行中</span></div>'+
+    '<div class="dash-i"><span>AI学习器</span><span class="st on">● 运行中</span></div>'+
+    '<div class="dash-i"><span>滤镜引擎</span><span class="st on">● Canvas 2D</span></div>'+
+    '<div class="dash-i"><span>上次更新</span><span style="font-weight:600;color:var(--rose-dark)">'+now+'</span></div>'+
     '</div>'+
-    '<div class="dash-i" style="margin-top:8px;"><span>?</span><span style="font-weight:600;">v2.5 繚 '+filters.length+'皛日?</span></div>'+
-    '<div class="dash-i" style="margin-top:4px;"><span>撌脣郎???/span><span style="font-weight:600;color:var(--success)">'+S.learned.length+'銝?/span></div>'+
-    '<div class="dash-i" style="margin-top:4px;"><span>憭?霈啣?</span><span style="font-weight:600;">'+S.history.length+'??/span></div>'+
+    '<div class="dash-i" style="margin-top:8px;"><span>版本</span><span style="font-weight:600;">v2.5 · '+filters.length+'滤镜</span></div>'+
+    '<div class="dash-i" style="margin-top:4px;"><span>已学技能</span><span style="font-weight:600;color:var(--success)">'+S.learned.length+'个</span></div>'+
+    '<div class="dash-i" style="margin-top:4px;"><span>处理记录</span><span style="font-weight:600;">'+S.history.length+'条</span></div>'+
     '</div>';
   document.body.appendChild(m);
 }
@@ -1091,7 +1092,7 @@ function toast(msg,tp){
   setTimeout(function(){if(e.parentElement)e.remove();},3000);
 }
 
-// ========== ????==========
+// ========== 初始化 ==========
 document.addEventListener('DOMContentLoaded',function(){
   renderFilters('all');
   renderTemplates('all');
