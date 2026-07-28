@@ -1,0 +1,66 @@
+groups:
+  - name: lixiu_alerts
+    rules:
+      - alert: HighResponseTime
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 3
+        for: 5m
+        labels: { severity: warning }
+        annotations:
+          summary: "API响应时间过高"
+          description: "95分位响应时间超过3秒，当前值: {{ $value }}s"
+
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m]) > 0.05
+        for: 5m
+        labels: { severity: critical }
+        annotations:
+          summary: "API错误率过高"
+          description: "5xx错误率超过5%，当前值: {{ $value | humanizePercentage }}"
+
+      - alert: HighMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 85
+        for: 10m
+        labels: { severity: warning }
+        annotations:
+          summary: "内存使用率过高"
+          description: "内存使用率超过85%，当前值: {{ $value }}%"
+
+      - alert: HighDiskUsage
+        expr: (1 - (node_filesystem_avail_bytes / node_filesystem_size_bytes)) * 100 > 80
+        for: 10m
+        labels: { severity: warning }
+        annotations:
+          summary: "磁盘使用率过高"
+          description: "磁盘使用率超过80%，当前值: {{ $value }}%"
+
+      - alert: RedisDown
+        expr: redis_up == 0
+        for: 1m
+        labels: { severity: critical }
+        annotations:
+          summary: "Redis服务不可用"
+          description: "Redis服务已停止"
+
+      - alert: MongoDBDown
+        expr: mongodb_up == 0
+        for: 1m
+        labels: { severity: critical }
+        annotations:
+          summary: "MongoDB服务不可用"
+          description: "MongoDB服务已停止"
+
+      - alert: CeleryTaskBacklog
+        expr: celery_queue_length > 100
+        for: 15m
+        labels: { severity: warning }
+        annotations:
+          summary: "Celery任务积压"
+          description: "任务队列积压超过100个，当前值: {{ $value }}"
+
+      - alert: CrawlerHighFailureRate
+        expr: rate(crawler_failures_total[1h]) / rate(crawler_attempts_total[1h]) > 0.3
+        for: 1h
+        labels: { severity: warning }
+        annotations:
+          summary: "爬虫失败率过高"
+          description: "爬虫失败率超过30%"
